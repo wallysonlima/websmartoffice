@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: WebSmartOffice
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: HikariCP
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: update  # ou create-drop / validate / none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    generate-ddl: true  # Gera o DDL automaticamente (n�o recomendado em produ��o)
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  show-login-endpoint: false
