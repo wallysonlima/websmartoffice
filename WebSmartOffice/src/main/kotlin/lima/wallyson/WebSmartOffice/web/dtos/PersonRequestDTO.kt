@@ -1,9 +1,10 @@
-package lima.wallyson.WebSmartOffice.domain
+package lima.wallyson.WebSmartOffice.web.dtos
 
+import lima.wallyson.WebSmartOffice.domain.Address
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-data class Person (
+data class PersonRequestDTO (
     val name:String,
     val email: String,
     val password: String,

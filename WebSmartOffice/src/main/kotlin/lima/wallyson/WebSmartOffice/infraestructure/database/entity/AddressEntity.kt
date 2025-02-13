@@ -8,10 +8,10 @@ import java.time.LocalDateTime
 data class AddressEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long,
+    val id: Long? = null,
 
-    @Column(name = "person_id", nullable = false)
-    val personId: Int,
+    @Column(name = "personCpf", nullable = false)
+    val personCpf: String,
 
     @Column(name= "street_name", nullable = false, length = 255)
     val streetName: String,
@@ -20,7 +20,7 @@ data class AddressEntity (
     val number: String,
 
     @Column(name = "complement_address", nullable = false, length = 100)
-    val complemnentAddress: String,
+    val complementAddress: String,
 
     @Column(nullable = false, length = 255)
     val district: String,

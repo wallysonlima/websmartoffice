@@ -9,10 +9,13 @@ import java.time.LocalDateTime
 data class PersonEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long,
+    val id: Long? = null,
 
     @Column(nullable = false, length = 100)
     val name:String,
+
+    @Column(nullable = false, length = 100)
+    val email: String,
 
     @Column(nullable = false, length = 100)
     val password: String,
