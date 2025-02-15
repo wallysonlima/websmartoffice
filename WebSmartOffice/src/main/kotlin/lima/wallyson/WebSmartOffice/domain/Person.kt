@@ -15,5 +15,6 @@ data class Person (
     val civilState: String,
     val isEmployee: Boolean,
     val dateCreation: LocalDateTime,
-    val address: Address? = null
+    val bankAccount: BankAccount,
+    val property: Property? = null
 )

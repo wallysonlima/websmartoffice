@@ -1,11 +1,18 @@
 package lima.wallyson.WebSmartOffice.web.controller
 
 import io.swagger.v3.oas.annotations.tags.Tag
-import lima.wallyson.WebSmartOffice.domain.usecase.AddressUseCase
-import lima.wallyson.WebSmartOffice.domain.usecase.PersonUseCase
+import lima.wallyson.WebSmartOffice.application.usecase.AddressUseCase
+import lima.wallyson.WebSmartOffice.application.usecase.BankAccountUseCase
+import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
+import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
 import lima.wallyson.WebSmartOffice.web.dtos.AddressRequestDTO
+import lima.wallyson.WebSmartOffice.web.dtos.AddressResponseDTO
+import lima.wallyson.WebSmartOffice.web.dtos.BankAccountRequestDTO
+import lima.wallyson.WebSmartOffice.web.dtos.BankAccountResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
+import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
+import lima.wallyson.WebSmartOffice.web.dtos.PropertyResponseDTO
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -20,7 +27,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1")
 class ApiController(
     private val personUseCase: PersonUseCase,
-    private val addressUseCase: AddressUseCase
+    private val addressUseCase: AddressUseCase,
+    private val propertyUseCase: PropertyUseCase,
+    private val bankAccountUseCase: BankAccountUseCase
 ) {
     @Tag(name = "get", description = "GET methods of HELLO")
     @GetMapping("/hello")
@@ -40,10 +49,28 @@ class ApiController(
     @PostMapping("/address/register")
     fun addressRegister(
         @RequestBody request: AddressRequestDTO
-    ): ResponseEntity<HttpStatus> {
-        addressUseCase.register(request)
+    ): ResponseEntity<AddressResponseDTO> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            addressUseCase.register(request)
+        )
+    }
 
-        return ResponseEntity.status(HttpStatus.CREATED).build()
+    @PostMapping("/property/register")
+    fun propertyRegister(
+        @RequestBody request: PropertyRequestDTO
+    ): ResponseEntity<PropertyResponseDTO> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            propertyUseCase.register(request)
+        )
+    }
+
+    @PostMapping("/bankAccount/register")
+    fun bankAccountRegister(
+        @RequestBody request: BankAccountRequestDTO
+    ): ResponseEntity<BankAccountResponseDTO> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            bankAccountUseCase.register(request)
+        )
     }
 
     @DeleteMapping("/person/delete/{cpf}")

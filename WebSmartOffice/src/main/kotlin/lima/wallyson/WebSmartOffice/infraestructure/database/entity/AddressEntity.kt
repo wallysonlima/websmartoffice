@@ -10,7 +10,7 @@ data class AddressEntity (
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     val id: Long? = null,
 
-    @Column(name = "personCpf", nullable = false)
+    @Column(name = "person_cpf", nullable = false)
     val personCpf: String,
 
     @Column(name= "street_name", nullable = false, length = 255)

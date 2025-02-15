@@ -1,4 +1,4 @@
-package lima.wallyson.WebSmartOffice.domain.usecase
+package lima.wallyson.WebSmartOffice.application.usecase
 
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
@@ -17,7 +17,7 @@ class PersonUseCase(
     private val log: Logger = LoggerFactory.getLogger(PersonUseCase::class.java)
 
     fun register(person: PersonRequestDTO): PersonResponseDTO {
-        log.info("c=RegisterPersonUseCase, m=registerPerson, i=init")
+        log.info("c=RegisterPersonUseCase, m=register, i=init")
 
         if (personRepository.existsByCpf(person.cpf)) {
             throw IllegalArgumentException("Erro, CPF Já existe!")
@@ -39,7 +39,7 @@ class PersonUseCase(
                     civilState = person.civilState
                 )
             ).let { savedPerson ->
-                log.info("c=RegisterPersonUseCase, m=registerPerson, i=end")
+                log.info("c=RegisterPersonUseCase, m=register, i=end")
                 return PersonResponseDTO(
                     id = savedPerson.id,
                     name = savedPerson.name,
@@ -47,15 +47,13 @@ class PersonUseCase(
                 )
             }
         } catch (ex: Exception) {
-            log.info("c=RegisterPersonUseCase, m=registerPerson, i=error, m=${ex.message}")
+            log.info("c=RegisterPersonUseCase, m=register, i=error, m=${ex.message}")
             throw ex
         }
     }
 
     fun deletePerson(cpf:String) {
         val person = personRepository.findByCpf(cpf)
-        val address =
-
         if ( person == null ) IllegalArgumentException("Pessoa com o $cpf não encontrado !")
 
         personRepository.deleteByCpf(person?.cpf!!)
