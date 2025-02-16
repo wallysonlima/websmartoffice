@@ -7,7 +7,9 @@ import lima.wallyson.WebSmartOffice.web.dtos.AddressRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.AddressResponseDTO
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 
+@Service
 class AddressUseCase(
     private val addressRepository: AddressRepository,
     private val personRepository: PersonRepository

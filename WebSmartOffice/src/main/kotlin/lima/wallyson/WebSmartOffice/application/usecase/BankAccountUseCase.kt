@@ -7,7 +7,9 @@ import lima.wallyson.WebSmartOffice.web.dtos.BankAccountRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.BankAccountResponseDTO
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 
+@Service
 class BankAccountUseCase(
     private val bankAccount: BankAccountRepository,
     private val personRepository: PersonRepository

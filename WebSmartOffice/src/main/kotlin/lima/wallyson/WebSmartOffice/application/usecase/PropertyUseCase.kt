@@ -7,7 +7,9 @@ import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyResponseDTO
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 
+@Service
 class PropertyUseCase(
     val personRepository: PersonRepository,
     val propertyRepository: PropertyRepository
@@ -24,6 +26,7 @@ class PropertyUseCase(
         try {
             propertyRepository.save(
                 PropertyEntity(
+                    personCpf = request.personCpf,
                     registerProperty = request.registerProperty,
                     notarialDeed = request.notarialDeed,
                     price = request.price,

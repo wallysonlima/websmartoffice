@@ -15,6 +15,9 @@ data class PropertyEntity (
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     val id: Long? = null,
 
+    @Column(name = "person_cpf", nullable = false)
+    val personCpf: String,
+
     @Column(name = "register_property", nullable = false, length = 100)
     val registerProperty:String,
 

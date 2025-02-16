@@ -7,8 +7,10 @@ import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
+@Service
 class PersonUseCase(
     private val personRepository: PersonRepository,
 
