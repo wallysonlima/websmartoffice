@@ -1,5 +1,6 @@
 package lima.wallyson.WebSmartOffice.web.dtos
 
+import lima.wallyson.WebSmartOffice.infraestructure.configuration.Role
 import java.time.LocalDate
 
 data class PersonRequestDTO (
@@ -12,5 +13,5 @@ data class PersonRequestDTO (
     val cpf: String,
     val rg: String,
     val civilState: String,
-    val isEmployee: Boolean
+    val role: Role
 )

@@ -36,7 +36,7 @@ class PersonUseCase(
                     gender = person.gender,
                     cpf = person.cpf,
                     rg = person.rg,
-                    isEmployee = false,
+                    role = person.role,
                     dateCreation = LocalDateTime.now(),
                     civilState = person.civilState
                 )
@@ -59,5 +59,15 @@ class PersonUseCase(
         if ( person == null ) IllegalArgumentException("Pessoa com o $cpf não encontrado !")
 
         personRepository.deleteByCpf(person?.cpf!!)
+    }
+
+    fun findByEmailAndPassword(email: String, password: String): PersonEntity? {
+        val person = personRepository.findByEmail(email)
+
+        return if ( person.isPresent && passwordEncoder.matches(password, person.get().password)) {
+            person.get()
+        } else {
+            null
+        }
     }
 }

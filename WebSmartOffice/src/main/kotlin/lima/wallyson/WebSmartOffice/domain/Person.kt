@@ -1,5 +1,6 @@
 package lima.wallyson.WebSmartOffice.domain
 
+import lima.wallyson.WebSmartOffice.infraestructure.configuration.Role
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -13,7 +14,7 @@ data class Person (
     val cpf: String,
     val rg: String,
     val civilState: String,
-    val isEmployee: Boolean,
+    val role: Role,
     val dateCreation: LocalDateTime,
     val bankAccount: BankAccount,
     val property: Property? = null

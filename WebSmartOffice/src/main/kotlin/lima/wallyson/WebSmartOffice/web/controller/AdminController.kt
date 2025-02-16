@@ -1,6 +1,5 @@
 package lima.wallyson.WebSmartOffice.web.controller
 
-import io.swagger.v3.oas.annotations.tags.Tag
 import lima.wallyson.WebSmartOffice.application.usecase.AddressUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.BankAccountUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
@@ -16,7 +15,6 @@ import lima.wallyson.WebSmartOffice.web.dtos.PropertyResponseDTO
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,19 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1")
-class ApiController(
+@RequestMapping("/api/admin")
+class AdminController(
     private val personUseCase: PersonUseCase,
     private val addressUseCase: AddressUseCase,
     private val propertyUseCase: PropertyUseCase,
     private val bankAccountUseCase: BankAccountUseCase
 ) {
-    @Tag(name = "get", description = "GET methods of HELLO")
-    @GetMapping("/hello")
-    fun sayHello(): String {
-        return "HEllo World Wallyson Lima!"
-    }
-
     @PostMapping("/person/register")
     fun personRegister(
         @RequestBody request: PersonRequestDTO
