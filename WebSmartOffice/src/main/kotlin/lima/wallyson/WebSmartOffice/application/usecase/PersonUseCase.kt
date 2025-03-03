@@ -30,7 +30,7 @@ class PersonUseCase(
                 PersonEntity(
                     name = person.name,
                     email = person.email,
-                    password = passwordEncoder.encode(person.password),
+                    passwordPerson = passwordEncoder.encode(person.password),
                     phoneNumber = person.phoneNumber,
                     dateBirth = person.dateBirth,
                     gender = person.gender,

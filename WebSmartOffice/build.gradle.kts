@@ -38,6 +38,11 @@ dependencies {
 	// SWAGGER
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
+	// Web3J -- SmartContract
+	implementation("org.web3j:core:4.9.6")
+	implementation("org.web3j:crypto:4.9.6")
+	implementation("org.web3j:contracts:4.9.6")
+
 	// Testes
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")

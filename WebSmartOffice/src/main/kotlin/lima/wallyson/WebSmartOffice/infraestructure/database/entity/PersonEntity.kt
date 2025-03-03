@@ -22,7 +22,7 @@ data class PersonEntity(
     val email: String,
 
     @Column(nullable = false, length = 100)
-    val password: String,
+    val passwordPerson: String,
 
     @Column(name= "phone_number", nullable = false, length = 11)
     val phoneNumber: String,
