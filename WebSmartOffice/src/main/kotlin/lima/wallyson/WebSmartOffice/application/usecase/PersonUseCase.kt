@@ -1,6 +1,8 @@
 package lima.wallyson.WebSmartOffice.application.usecase
 
+import lima.wallyson.WebSmartOffice.infraestructure.database.entity.BankAccountEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonEntity
+import lima.wallyson.WebSmartOffice.infraestructure.database.repository.BankAccountRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
@@ -13,37 +15,46 @@ import java.time.LocalDateTime
 @Service
 class PersonUseCase(
     private val personRepository: PersonRepository,
-
+    private val bankAccountRepository: BankAccountRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
     private val log: Logger = LoggerFactory.getLogger(PersonUseCase::class.java)
 
-    fun register(person: PersonRequestDTO): PersonResponseDTO {
+    fun register(request: PersonRequestDTO): PersonResponseDTO {
         log.info("c=RegisterPersonUseCase, m=register, i=init")
 
-        if (personRepository.existsByCpf(person.cpf)) {
+        if (personRepository.existsByCpf(request.cpf)) {
             throw IllegalArgumentException("Erro, CPF Já existe!")
         }
 
         try {
             personRepository.save(
                 PersonEntity(
-                    name = person.name,
-                    email = person.email,
-                    passwordPerson = passwordEncoder.encode(person.password),
-                    phoneNumber = person.phoneNumber,
-                    dateBirth = person.dateBirth,
-                    gender = person.gender,
-                    cpf = person.cpf,
-                    rg = person.rg,
-                    role = person.role,
+                    name = request.name,
+                    email = request.email,
+                    passwordPerson = passwordEncoder.encode(request.password),
+                    phoneNumber = request.phoneNumber,
+                    dateBirth = request.dateBirth,
+                    gender = request.gender,
+                    cpf = request.cpf,
+                    rg = request.rg,
+                    role = request.role,
                     dateCreation = LocalDateTime.now(),
-                    civilState = person.civilState
+                    civilState = request.civilState
                 )
             ).let { savedPerson ->
+                bankAccountRepository.save(
+                    BankAccountEntity(
+                        personCpf = request.cpf,
+                        numberAccount = request.bankAccount.numberAccount,
+                        balance = request.bankAccount.balance,
+                        person = savedPerson
+                    )
+                )
+
                 log.info("c=RegisterPersonUseCase, m=register, i=end")
                 return PersonResponseDTO(
-                    id = savedPerson.id,
+                    cpf = savedPerson.cpf,
                     name = savedPerson.name,
                     email = savedPerson.email
                 )

@@ -1,14 +1,8 @@
 package lima.wallyson.WebSmartOffice.web.controller
 
-import lima.wallyson.WebSmartOffice.application.usecase.AddressUseCase
-import lima.wallyson.WebSmartOffice.application.usecase.BankAccountUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.Web3Service
-import lima.wallyson.WebSmartOffice.web.dtos.AddressRequestDTO
-import lima.wallyson.WebSmartOffice.web.dtos.AddressResponseDTO
-import lima.wallyson.WebSmartOffice.web.dtos.BankAccountRequestDTO
-import lima.wallyson.WebSmartOffice.web.dtos.BankAccountResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
@@ -30,9 +24,7 @@ import java.math.BigInteger
 @RequestMapping("/api/admin")
 class AdminController(
     private val personUseCase: PersonUseCase,
-    private val addressUseCase: AddressUseCase,
     private val propertyUseCase: PropertyUseCase,
-    private val bankAccountUseCase: BankAccountUseCase
 ) {
     @Autowired
     lateinit var web3Service: Web3Service
@@ -46,30 +38,12 @@ class AdminController(
         )
     }
 
-    @PostMapping("/address/register")
-    fun addressRegister(
-        @RequestBody request: AddressRequestDTO
-    ): ResponseEntity<AddressResponseDTO> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-            addressUseCase.register(request)
-        )
-    }
-
     @PostMapping("/property/register")
     fun propertyRegister(
         @RequestBody request: PropertyRequestDTO
     ): ResponseEntity<PropertyResponseDTO> {
         return ResponseEntity.status(HttpStatus.CREATED).body(
             propertyUseCase.register(request)
-        )
-    }
-
-    @PostMapping("/bankAccount/register")
-    fun bankAccountRegister(
-        @RequestBody request: BankAccountRequestDTO
-    ): ResponseEntity<BankAccountResponseDTO> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-            bankAccountUseCase.register(request)
         )
     }
 

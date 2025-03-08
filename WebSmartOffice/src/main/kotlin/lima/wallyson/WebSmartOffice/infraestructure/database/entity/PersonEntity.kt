@@ -9,11 +9,12 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "person")
+@Table(name = "persons")
 data class PersonEntity(
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long? = null,
+    @Column(nullable = false, length = 11)
+    val cpf: String,
 
     @Column(nullable = false, length = 100)
     val name:String,
@@ -33,14 +34,17 @@ data class PersonEntity(
     @Column(nullable = false, length = 100)
     val gender: String,
 
-    @Column(nullable = false, length = 11)
-    val cpf: String,
-
     @Column(nullable = false, length = 20)
     val rg: String,
 
     @Column(name = "civil_state", nullable = false, length = 100)
     val civilState: String,
+
+    @OneToMany(mappedBy = "owner", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
+    val properties: List<PropertyEntity> = mutableListOf(),
+
+    @OneToOne(mappedBy = "person", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    val bankAccount: BankAccountEntity? = null,
 
     @Enumerated(EnumType.STRING)
     val role: Role,

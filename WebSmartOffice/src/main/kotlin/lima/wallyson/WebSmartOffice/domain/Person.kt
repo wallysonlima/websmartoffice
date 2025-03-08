@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 data class Person (
     val name:String,
     val email: String,
-    val password: String,
+    val passwordPerson: String,
     val phoneNumber: String,
     val dateBirth: LocalDate,
     val gender: String,
@@ -16,6 +16,6 @@ data class Person (
     val civilState: String,
     val role: Role,
     val dateCreation: LocalDateTime,
-    val bankAccount: BankAccount,
-    val property: Property? = null
+    val bankAccount: BankAccount? = null,
+    val properties: MutableList<Property> = mutableListOf()
 )

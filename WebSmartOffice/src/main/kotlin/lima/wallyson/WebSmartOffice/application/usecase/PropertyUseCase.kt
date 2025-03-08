@@ -1,6 +1,8 @@
 package lima.wallyson.WebSmartOffice.application.usecase
 
+import lima.wallyson.WebSmartOffice.infraestructure.database.entity.AddressEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PropertyEntity
+import lima.wallyson.WebSmartOffice.infraestructure.database.repository.AddressRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PropertyRepository
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
@@ -12,7 +14,8 @@ import org.springframework.stereotype.Service
 @Service
 class PropertyUseCase(
     val personRepository: PersonRepository,
-    val propertyRepository: PropertyRepository
+    val propertyRepository: PropertyRepository,
+    val addressRepository: AddressRepository
 ) {
     private val log: Logger = LoggerFactory.getLogger(PropertyUseCase::class.java)
 
@@ -24,21 +27,34 @@ class PropertyUseCase(
         if (person == null) throw IllegalArgumentException("Erro, Pessoa não encontrada!")
 
         try {
-            propertyRepository.save(
+            val savedProperty = propertyRepository.save(
                 PropertyEntity(
-                    personCpf = request.personCpf,
                     registerProperty = request.registerProperty,
                     notarialDeed = request.notarialDeed,
                     price = request.price,
-                    size = request.size
+                    size = request.size,
+                    owner = person
                 )
             )
+
+            val address = AddressEntity(
+                streetName = request.address.streetName,
+                number = request.address.number,
+                complementAddress = request.address.complementAddress,
+                district = request.address.district,
+                city = request.address.city,
+                state = request.address.state,
+                postalCode = request.address.postalCode,
+                property = savedProperty
+            )
+
+            addressRepository.save(address)
 
             return PropertyResponseDTO(
                 registerProperty = request.registerProperty,
                 notarialDeed = request.notarialDeed,
                 price = request.price,
-                size = request.size
+                size = request.size,
             )
 
             log.info("c=PropertyUseCase, m=register, i=end")

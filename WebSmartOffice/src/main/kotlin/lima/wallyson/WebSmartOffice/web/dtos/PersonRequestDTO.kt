@@ -13,5 +13,6 @@ data class PersonRequestDTO (
     val cpf: String,
     val rg: String,
     val civilState: String,
-    val role: Role
+    val role: Role,
+    val bankAccount: BankAccountRequestDTO
 )

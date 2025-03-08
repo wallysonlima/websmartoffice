@@ -1,7 +1,6 @@
 package lima.wallyson.WebSmartOffice.web.dtos
 
 data class AddressRequestDTO (
-    val personCpf: String,
     val streetName: String,
     val number: String,
     val complementAddress: String,
