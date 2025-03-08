@@ -43,6 +43,9 @@ dependencies {
 	implementation("org.web3j:crypto:4.9.6")
 	implementation("org.web3j:contracts:4.9.6")
 
+	//Json
+	implementation("org.json:json:20240303")
+
 	// Testes
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")

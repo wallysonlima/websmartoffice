@@ -1,5 +1,6 @@
 package lima.wallyson.WebSmartOffice.application.usecase
 
+import jakarta.transaction.Transactional
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.BankAccountEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.BankAccountRepository
@@ -20,6 +21,7 @@ class PersonUseCase(
 ) {
     private val log: Logger = LoggerFactory.getLogger(PersonUseCase::class.java)
 
+    @Transactional
     fun register(request: PersonRequestDTO): PersonResponseDTO {
         log.info("c=RegisterPersonUseCase, m=register, i=init")
 
@@ -65,6 +67,7 @@ class PersonUseCase(
         }
     }
 
+    @Transactional
     fun deletePerson(cpf:String) {
         val person = personRepository.findByCpf(cpf)
         if ( person == null ) IllegalArgumentException("Pessoa com o $cpf não encontrado !")

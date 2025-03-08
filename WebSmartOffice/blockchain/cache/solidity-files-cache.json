@@ -36,6 +36,42 @@
       "artifacts": [
         "SimpleStorage"
       ]
+    },
+    "/home/wallysonalima/Documents/POS_USP/TCC/SmartProject/websmartoffice/WebSmartOffice/blockchain/contracts/PropertySale.sol": {
+      "lastModificationDate": 1741468264260,
+      "contentHash": "9f11a01d3823d1d138f58aa2efe989d7",
+      "sourceName": "contracts/PropertySale.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "PropertySale"
+      ]
     }
   }
 }

@@ -1,5 +1,7 @@
 package lima.wallyson.WebSmartOffice.application.usecase
 
+import blockchain_java.PropertySale
+import jakarta.transaction.Transactional
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.AddressEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PropertyEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.AddressRepository
@@ -10,15 +12,22 @@ import lima.wallyson.WebSmartOffice.web.dtos.PropertyResponseDTO
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import org.web3j.crypto.Credentials
+import org.web3j.protocol.Web3j
+import org.web3j.tx.Transfer
+import org.web3j.tx.gas.DefaultGasProvider
+import org.web3j.utils.Convert
 
 @Service
 class PropertyUseCase(
     val personRepository: PersonRepository,
     val propertyRepository: PropertyRepository,
-    val addressRepository: AddressRepository
+    val addressRepository: AddressRepository,
+    val web3j: Web3j
 ) {
     private val log: Logger = LoggerFactory.getLogger(PropertyUseCase::class.java)
 
+    @Transactional
     fun register(request: PropertyRequestDTO): PropertyResponseDTO {
         log.info("c=RegisterPropertyUseCase, m=register, i=init")
 
@@ -63,5 +72,36 @@ class PropertyUseCase(
             throw ex
         }
     }
+
+    fun buyProperty(
+        buyerPrivateKey: String,
+        contractAddress: String
+    ): String {
+        val buyerCredentials = Credentials.create(buyerPrivateKey)
+
+        // Carregar o contrato implantado
+        val contract = PropertySale.load(contractAddress, web3j, buyerCredentials, DefaultGasProvider())
+
+        // Verificar se a propriedade já foi vendida
+        if (contract.isPropertySold.send()) {
+            throw IllegalStateException("Esta propriedade já foi vendida.")
+        }
+
+        // Obter o preço do imóvel diretamente do contrato
+        val priceInWei = contract.priceInWei.send()
+
+        // Transferir ETH do comprador para o contrato PropertySale
+        val txReceipt = Transfer.sendFunds(
+            web3j, buyerCredentials, contractAddress,
+            Convert.fromWei(priceInWei.toBigDecimal(), Convert.Unit.ETHER), Convert.Unit.ETHER
+        ).send()
+
+        // Chamar a função buyProperty() no contrato para confirmar a compra
+        val transactionReceipt = contract.buyProperty(priceInWei).send()
+
+        return "Compra realizada com sucesso! Hash da transação: ${transactionReceipt.transactionHash}"
+    }
 }
+
+
 

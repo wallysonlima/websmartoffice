@@ -2,7 +2,7 @@ package lima.wallyson.WebSmartOffice.web.controller
 
 import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
-import lima.wallyson.WebSmartOffice.application.usecase.Web3Service
+import lima.wallyson.WebSmartOffice.application.usecase.SmartContractUseCase
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
@@ -27,7 +27,7 @@ class AdminController(
     private val propertyUseCase: PropertyUseCase,
 ) {
     @Autowired
-    lateinit var web3Service: Web3Service
+    lateinit var smartContractUseCase: SmartContractUseCase
 
     @PostMapping("/person/register")
     fun personRegister(
@@ -60,16 +60,16 @@ class AdminController(
         }
     }
 
-    @GetMapping("/contract/get")
-    fun getValue(): BigInteger {
-        return web3Service.getStoredValue("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
-    }
-
-    @PostMapping("/contract/set")
-    fun setValue(@RequestParam value: BigInteger) {
-        web3Service.setStoredValue(
-            "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            value
-        )
-    }
+//    @GetMapping("/contract/get")
+//    fun getValue(): BigInteger {
+//        return smartContractUseCase.getStoredValue("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+//    }
+//
+//    @PostMapping("/contract/set")
+//    fun setValue(@RequestParam value: BigInteger) {
+//        smartContractUseCase.setStoredValue(
+//            "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+//            value
+//        )
+//    }
 }
