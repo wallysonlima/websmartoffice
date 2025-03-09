@@ -17,6 +17,7 @@ import java.time.LocalDateTime
 class PersonUseCase(
     private val personRepository: PersonRepository,
     private val bankAccountRepository: BankAccountRepository,
+    private val bankAccountUseCase: BankAccountUseCase,
     private val passwordEncoder: PasswordEncoder
 ) {
     private val log: Logger = LoggerFactory.getLogger(PersonUseCase::class.java)
@@ -48,11 +49,22 @@ class PersonUseCase(
                 bankAccountRepository.save(
                     BankAccountEntity(
                         personCpf = request.cpf,
-                        numberAccount = request.bankAccount.numberAccount,
+                        privateKey = request.bankAccount?.privateKey!!,
+                        ethAddress = request.bankAccount.ethAddress,
                         balance = request.bankAccount.balance,
                         person = savedPerson
                     )
-                )
+                ).let { accountSaved ->
+                    bankAccountUseCase.transferAllFunds(
+                        accountSaved.privateKey,
+                        accountSaved.ethAddress
+                    )
+
+                    bankAccountUseCase.depositToEthereumAccount(
+                        accountSaved.ethAddress,
+                        accountSaved.balance
+                    )
+                }
 
                 log.info("c=RegisterPersonUseCase, m=register, i=end")
                 return PersonResponseDTO(
@@ -73,15 +85,5 @@ class PersonUseCase(
         if ( person == null ) IllegalArgumentException("Pessoa com o $cpf não encontrado !")
 
         personRepository.deleteByCpf(person?.cpf!!)
-    }
-
-    fun findByEmailAndPassword(email: String, password: String): PersonEntity? {
-        val person = personRepository.findByEmail(email)
-
-        return if ( person.isPresent && passwordEncoder.matches(password, person.get().password)) {
-            person.get()
-        } else {
-            null
-        }
     }
 }

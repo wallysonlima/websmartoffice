@@ -14,15 +14,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
-import org.web3j.tx.Transfer
 import org.web3j.tx.gas.DefaultGasProvider
-import org.web3j.utils.Convert
 
 @Service
 class PropertyUseCase(
     val personRepository: PersonRepository,
     val propertyRepository: PropertyRepository,
     val addressRepository: AddressRepository,
+    val bankAccount: BankAccountUseCase,
     val web3j: Web3j
 ) {
     private val log: Logger = LoggerFactory.getLogger(PropertyUseCase::class.java)
@@ -74,6 +73,8 @@ class PropertyUseCase(
     }
 
     fun buyProperty(
+        cpfBuyer: String,
+        cpfSeller: String,
         buyerPrivateKey: String,
         contractAddress: String
     ): String {
@@ -89,12 +90,21 @@ class PropertyUseCase(
 
         // Obter o preço do imóvel diretamente do contrato
         val priceInWei = contract.priceInWei.send()
+        val amountBrl = bankAccount.convertFromEthToBrl(priceInWei.toBigDecimal())
 
-        // Transferir ETH do comprador para o contrato PropertySale
-        val txReceipt = Transfer.sendFunds(
-            web3j, buyerCredentials, contractAddress,
-            Convert.fromWei(priceInWei.toBigDecimal(), Convert.Unit.ETHER), Convert.Unit.ETHER
-        ).send()
+        // Atualiza os valores das contas no banco de dados
+        bankAccount.transferFundsBetweenBankAccounts(
+            cpfBuyer,
+            amountBrl,
+            cpfSeller
+        ).let {
+            // Atualiza os valores das contas na rede ethereum
+            bankAccount.transferFundsBetweenEthereumAccounts(
+                buyerPrivateKey,
+                contractAddress,
+                amountBrl
+            )
+        }
 
         // Chamar a função buyProperty() no contrato para confirmar a compra
         val transactionReceipt = contract.buyProperty(priceInWei).send()

@@ -14,5 +14,5 @@ data class PersonRequestDTO (
     val rg: String,
     val civilState: String,
     val role: Role,
-    val bankAccount: BankAccountRequestDTO
+    val bankAccount: BankAccountRequestDTO? = null
 )

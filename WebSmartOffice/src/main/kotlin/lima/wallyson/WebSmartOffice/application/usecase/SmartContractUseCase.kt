@@ -31,7 +31,7 @@ class SmartContractUseCase(private val web3j: Web3j) {
     }
 
     fun deployContract(
-        numberAccount:String,
+        contractAddress:String,
         propertyAddress: String,
         propertySize: BigInteger,
         priceInBrl: BigDecimal,
@@ -40,7 +40,7 @@ class SmartContractUseCase(private val web3j: Web3j) {
     ): String {
         val ethPriceInWei = getEthereumPrice().toBigDecimal()  // Convertendo para BigDecimal
         val priceInWei = (priceInBrl / ethPriceInWei).toBigInteger()  // Convertendo corretamente para WEI
-        val credentials = Credentials.create(numberAccount)
+        val credentials = Credentials.create(contractAddress)
 
         val contract = PropertySale.deploy(
             web3j, credentials, DefaultGasProvider(),

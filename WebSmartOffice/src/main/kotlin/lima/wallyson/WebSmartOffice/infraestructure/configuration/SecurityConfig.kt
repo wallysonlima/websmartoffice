@@ -1,10 +1,10 @@
 package lima.wallyson.WebSmartOffice.infraestructure.configuration
 
+import lima.wallyson.WebSmartOffice.application.usecase.PersonDetailsUseCase
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val userDetails: UserDetailsService
+    private val personDetails: PersonDetailsUseCase
 ) {
     @Bean
     fun passwordEncoder(): PasswordEncoder{
@@ -34,7 +34,7 @@ class SecurityConfig(
                 requests.requestMatchers("/admin/**").hasRole("ADMIN")
                 requests.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 requests.anyRequest().authenticated()
-            }.userDetailsService(userDetails)
+            }.userDetailsService(personDetails)
             .formLogin { it.defaultSuccessUrl("/home", true) }
             .logout { it.logoutUrl("/logout").logoutSuccessUrl("/") }
 

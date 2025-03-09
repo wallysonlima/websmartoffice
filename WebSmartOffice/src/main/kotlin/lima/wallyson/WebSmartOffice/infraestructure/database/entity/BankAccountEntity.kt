@@ -7,6 +7,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.MapsId
 import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity
@@ -16,11 +17,14 @@ data class BankAccountEntity(
         @Column(name = "person_cpf", nullable = false, length = 11)
         val personCpf: String,
 
-        @Column(name = "number_account", nullable = false)
-        val numberAccount: String,
+        @Column(name = "private_key", nullable = false)
+        val privateKey: String,
+
+        @Column(name = "ethereum_address", nullable = false)
+        val ethAddress: String,
 
         @Column(nullable = false)
-        val balance: Double,
+        var balance: BigDecimal,
 
         @OneToOne
         @MapsId

@@ -4,4 +4,6 @@ import lima.wallyson.WebSmartOffice.infraestructure.database.entity.BankAccountE
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface BankAccountRepository: JpaRepository<BankAccountEntity, Long> {
+
+    fun findBankAccountByCpf(cpf:String): BankAccountEntity
 }

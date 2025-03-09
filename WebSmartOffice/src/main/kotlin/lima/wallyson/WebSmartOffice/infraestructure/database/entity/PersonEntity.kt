@@ -55,7 +55,7 @@ data class PersonEntity(
     override fun getAuthorities(): Collection<GrantedAuthority> =
         listOf(SimpleGrantedAuthority("ROLE_${role.name}"))
 
-    override fun getPassword(): String = password
+    override fun getPassword(): String = passwordPerson
 
     override fun getUsername(): String = email
 
