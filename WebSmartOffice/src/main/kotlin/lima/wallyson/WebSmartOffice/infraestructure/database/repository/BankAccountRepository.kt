@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface BankAccountRepository: JpaRepository<BankAccountEntity, Long> {
 
-    fun findBankAccountByCpf(cpf:String): BankAccountEntity
+    fun findBankAccountByPersonCpf(personCpf:String): BankAccountEntity
 }

@@ -3,6 +3,7 @@ package lima.wallyson.WebSmartOffice.web.controller
 import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.SmartContractUseCase
+import lima.wallyson.WebSmartOffice.web.dtos.ContractRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
@@ -15,17 +16,17 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/admin")
 class AdminController(
     private val personUseCase: PersonUseCase,
     private val propertyUseCase: PropertyUseCase,
+    private val smartContractUseCase: SmartContractUseCase
 ) {
-    @Autowired
-    lateinit var smartContractUseCase: SmartContractUseCase
-
     @PostMapping("/person/register")
     fun personRegister(
         @RequestBody request: PersonRequestDTO
@@ -57,16 +58,17 @@ class AdminController(
         }
     }
 
-//    @GetMapping("/contract/get")
-//    fun getValue(): BigInteger {
-//        return smartContractUseCase.getStoredValue("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
-//    }
-//
-//    @PostMapping("/contract/set")
-//    fun setValue(@RequestParam value: BigInteger) {
-//        smartContractUseCase.setStoredValue(
-//            "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-//            value
-//        )
-//    }
+    @PostMapping("/property/signContract")
+    fun signContract(@RequestParam contractRequest: ContractRequestDTO): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            smartContractUseCase.deployContract(
+                contractRequest.contractAddress,
+                contractRequest.propertyAddress,
+                contractRequest.propertySize,
+                contractRequest.priceInBrl,
+                UUID.randomUUID().toString(),
+                UUID.randomUUID().toString(),
+            )
+        )
+    }
 }

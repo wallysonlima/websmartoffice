@@ -100,8 +100,8 @@ class BankAccountUseCase(
         amount: BigDecimal,
         cpfSeller: String
     ) {
-        val buyerBank = bankAccountRepository.findBankAccountByCpf(cpfBuyer)
-        val sellerBank = bankAccountRepository.findBankAccountByCpf(cpfSeller)
+        val buyerBank = bankAccountRepository.findBankAccountByPersonCpf(cpfBuyer)
+        val sellerBank = bankAccountRepository.findBankAccountByPersonCpf(cpfSeller)
 
         if ( (buyerBank.balance - amount) > (0).toBigDecimal() ) {
             buyerBank.balance = buyerBank.balance - amount
