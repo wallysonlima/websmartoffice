@@ -8,7 +8,6 @@ import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyResponseDTO
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
