@@ -1,15 +1,8 @@
 package lima.wallyson.WebSmartOffice.infraestructure.database.entity
 
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
 import java.time.LocalDateTime
 
@@ -17,8 +10,8 @@ import java.time.LocalDateTime
 @Table(name = "properties")
 data class PropertyEntity (
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long? = null,
+    @Column(name = "property_cpf")
+    val propertyCpf: String? = null,
 
     @Column(name = "register_property", nullable = false, length = 100)
     val registerProperty:String,
@@ -31,13 +24,6 @@ data class PropertyEntity (
 
     @Column(nullable = false, length = 100)
     val size: String,
-
-    @ManyToOne
-    @JoinColumn(name = "pr_person_cpf", referencedColumnName = "cpf")
-    val owner: PersonEntity,
-
-    @OneToOne(mappedBy = "property", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
-    val address: AddressEntity? = null,
 
     @Column(name = "dt_creation")
     val dateCreation: LocalDateTime = LocalDateTime.now()

@@ -1,15 +1,15 @@
 package lima.wallyson.WebSmartOffice.infraestructure.database.repository
 
-import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonEntity
+import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonsEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
 
-interface PersonRepository : JpaRepository<PersonEntity, Long> {
+interface PersonRepository : JpaRepository<PersonsEntity, Long> {
     fun existsByCpf(cpf: String): Boolean
 
-    fun findByCpf(cpf: String): PersonEntity?
+    fun findByCpf(cpf: String): PersonsEntity?
 
-    fun findByEmail(email: String): Optional<PersonEntity>
+    fun findByEmail(email: String): Optional<PersonsEntity>
 
     fun deleteByCpf(cpf: String)
 }

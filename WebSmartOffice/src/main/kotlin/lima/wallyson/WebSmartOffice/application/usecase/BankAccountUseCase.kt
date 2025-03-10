@@ -22,6 +22,7 @@ class BankAccountUseCase(
     private val hardhatPrivateKey = "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113b37c84b63da4a06d6e3a10bc"
     private val hardhatCredentials = Credentials.create(hardhatPrivateKey)
     private val hardhatAddress = hardhatCredentials.address
+    val defaultGasPrice:BigDecimal = (20000000000).toBigDecimal()
 
     /**
      * Obtém o saldo de uma conta Ethereum
@@ -31,18 +32,12 @@ class BankAccountUseCase(
         return Convert.fromWei(balanceWei.toBigDecimal(), Convert.Unit.ETHER)
     }
 
-    /**
-     * Transfere todo o saldo da conta Ethereum do usuário para a conta Hardhat (zerando a conta)
-     */
-    fun transferAllFunds(fromPrivateKey: String, fromAddress: String) {
-        val credentials = Credentials.create(fromPrivateKey)
-        val balanceEth = getBalance(fromAddress)
+    // Obtem o saldo em BRL da conta Ethereum
+    fun getBalanceInBrl(address: String): BigDecimal {
+        val amountInEth = getBalance(address)
+        val ethPriceInBrl = getEthereumPrice()
 
-        if (balanceEth > BigDecimal.ZERO) {
-            Transfer.sendFunds(
-                web3j, credentials, hardhatAddress, balanceEth, Convert.Unit.ETHER
-            ).send()
-        }
+        return amountInEth * ethPriceInBrl
     }
 
     /**
@@ -63,11 +58,11 @@ class BankAccountUseCase(
     }
 
     /**
-     * Converte BRL para ETH e deposita na conta Ethereum do usuário
+     * Deposita o valor em ETH na conta
      */
     fun depositToEthereumAccount(toAddress: String, amountInBrl: BigDecimal) {
         val ethPriceInBrl = getEthereumPrice()
-        val amountInEth = amountInBrl / ethPriceInBrl
+        val amountInEth = (amountInBrl / ethPriceInBrl) - defaultGasPrice
 
         Transfer.sendFunds(
             web3j, hardhatCredentials, toAddress, amountInEth, Convert.Unit.ETHER
@@ -89,7 +84,7 @@ class BankAccountUseCase(
         val credentials = Credentials.create(fromPrivateKey)
 
         val transactionReceipt: TransactionReceipt = Transfer.sendFunds(
-            web3j, credentials, toAddress, amount, Convert.Unit.ETHER
+            web3j, credentials, toAddress, amount - defaultGasPrice, Convert.Unit.ETHER
         ).send()
 
         return transactionReceipt.transactionHash
@@ -100,8 +95,8 @@ class BankAccountUseCase(
         amount: BigDecimal,
         cpfSeller: String
     ) {
-        val buyerBank = bankAccountRepository.findBankAccountByPersonCpf(cpfBuyer)
-        val sellerBank = bankAccountRepository.findBankAccountByPersonCpf(cpfSeller)
+        val buyerBank = bankAccountRepository.findBankAccountByBankCpf(cpfBuyer)
+        val sellerBank = bankAccountRepository.findBankAccountByBankCpf(cpfSeller)
 
         if ( (buyerBank.balance - amount) > (0).toBigDecimal() ) {
             buyerBank.balance = buyerBank.balance - amount

@@ -35,28 +35,28 @@ class PropertyUseCase(
         if (person == null) throw IllegalArgumentException("Erro, Pessoa não encontrada!")
 
         try {
-            val savedProperty = propertyRepository.save(
+            propertyRepository.save(
                 PropertyEntity(
+                    propertyCpf = request.personCpf,
                     registerProperty = request.registerProperty,
                     notarialDeed = request.notarialDeed,
                     price = request.price,
                     size = request.size,
-                    owner = person
                 )
-            )
+            ).let {
+                val address = AddressEntity(
+                    propertyRegister = request.registerProperty,
+                    streetName = request.address.streetName,
+                    number = request.address.number,
+                    complementAddress = request.address.complementAddress,
+                    district = request.address.district,
+                    city = request.address.city,
+                    state = request.address.state,
+                    postalCode = request.address.postalCode,
+                )
 
-            val address = AddressEntity(
-                streetName = request.address.streetName,
-                number = request.address.number,
-                complementAddress = request.address.complementAddress,
-                district = request.address.district,
-                city = request.address.city,
-                state = request.address.state,
-                postalCode = request.address.postalCode,
-                property = savedProperty
-            )
-
-            addressRepository.save(address)
+                addressRepository.save(address)
+            }
 
             return PropertyResponseDTO(
                 registerProperty = request.registerProperty,

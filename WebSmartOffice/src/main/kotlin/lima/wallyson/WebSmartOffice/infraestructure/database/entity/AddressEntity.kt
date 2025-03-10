@@ -7,8 +7,8 @@ import java.time.LocalDateTime
 @Table(name = "addresses")
 data class AddressEntity (
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long? = null,
+    @Column(name= "property_register")
+    val propertyRegister: String? = null,
 
     @Column(name= "street_name", nullable = false, length = 255)
     val streetName: String,
@@ -30,10 +30,6 @@ data class AddressEntity (
 
     @Column(name = "postal_code", nullable = false, length = 8)
     val postalCode: String,
-
-    @OneToOne
-    @JoinColumn(name = "property_id", referencedColumnName = "id")
-    val property: PropertyEntity,
 
     @Column(name = "dt_creation")
     val dateCreation: LocalDateTime = LocalDateTime.now()

@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "persons")
-data class PersonEntity(
+data class PersonsEntity(
 
     @Id
     @Column(nullable = false, length = 11)
@@ -39,12 +39,6 @@ data class PersonEntity(
 
     @Column(name = "civil_state", nullable = false, length = 100)
     val civilState: String,
-
-    @OneToMany(mappedBy = "owner", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
-    val properties: List<PropertyEntity> = mutableListOf(),
-
-    @OneToOne(mappedBy = "person", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
-    val bankAccount: BankAccountEntity? = null,
 
     @Enumerated(EnumType.STRING)
     val role: Role,

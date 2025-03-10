@@ -1,8 +1,8 @@
 package lima.wallyson.WebSmartOffice.application.usecase
 
 import jakarta.transaction.Transactional
-import lima.wallyson.WebSmartOffice.infraestructure.database.entity.BankAccountEntity
-import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonEntity
+import lima.wallyson.WebSmartOffice.infraestructure.database.entity.BankAccountsEntity
+import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonsEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.BankAccountRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
@@ -11,6 +11,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Service
@@ -21,6 +22,7 @@ class PersonUseCase(
     private val passwordEncoder: PasswordEncoder
 ) {
     private val log: Logger = LoggerFactory.getLogger(PersonUseCase::class.java)
+    val defaultGasPriceInBrl:BigDecimal = (0.000000218133).toBigDecimal()
 
     @Transactional
     fun register(request: PersonRequestDTO): PersonResponseDTO {
@@ -32,7 +34,7 @@ class PersonUseCase(
 
         try {
             personRepository.save(
-                PersonEntity(
+                PersonsEntity(
                     name = request.name,
                     email = request.email,
                     passwordPerson = passwordEncoder.encode(request.password),
@@ -47,24 +49,13 @@ class PersonUseCase(
                 )
             ).let { savedPerson ->
                 bankAccountRepository.save(
-                    BankAccountEntity(
-                        personCpf = request.cpf,
+                    BankAccountsEntity(
+                        bankCpf = request.cpf,
                         privateKey = request.bankAccount?.privateKey!!,
                         ethAddress = request.bankAccount.ethAddress,
-                        balance = request.bankAccount.balance,
-                        person = savedPerson
+                        balance = bankAccountUseCase.getBalanceInBrl(request.bankAccount.ethAddress)
                     )
-                ).let { accountSaved ->
-                    bankAccountUseCase.transferAllFunds(
-                        accountSaved.privateKey,
-                        accountSaved.ethAddress
-                    )
-
-                    bankAccountUseCase.depositToEthereumAccount(
-                        accountSaved.ethAddress,
-                        accountSaved.balance
-                    )
-                }
+                )
 
                 log.info("c=RegisterPersonUseCase, m=register, i=end")
                 return PersonResponseDTO(
