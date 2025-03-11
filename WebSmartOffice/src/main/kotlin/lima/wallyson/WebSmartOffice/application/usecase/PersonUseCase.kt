@@ -11,7 +11,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Service
@@ -22,15 +21,14 @@ class PersonUseCase(
     private val passwordEncoder: PasswordEncoder
 ) {
     private val log: Logger = LoggerFactory.getLogger(PersonUseCase::class.java)
-    val defaultGasPriceInBrl:BigDecimal = (0.000000218133).toBigDecimal()
 
     @Transactional
     fun register(request: PersonRequestDTO): PersonResponseDTO {
         log.info("c=RegisterPersonUseCase, m=register, i=init")
 
-        //if (personRepository.existsByCpf(request.cpf)) {
-        //    throw IllegalArgumentException("Erro, CPF Já existe!")
-        //}
+        if (personRepository.existsByCpf(request.cpf)) {
+            throw IllegalArgumentException("Erro, CPF Já existe!")
+        }
 
         try {
             personRepository.save(

@@ -95,32 +95,42 @@ class PropertyUseCase(
         val priceInWei = contract.priceInWei.send()
         val amountBrl = bankAccount.convertFromEthToBrl(priceInWei.toBigDecimal())
 
-        // Atualiza os valores das contas no banco de dados
-        bankAccount.transferFundsBetweenBankAccounts(
-            cpfBuyer,
-            amountBrl,
-            cpfSeller
-        ).let {
-            // Atualiza os valores das contas na rede ethereum
-            bankAccount.transferFundsBetweenEthereumAccounts(
-                buyerPrivateKey,
-                contractAddress,
-                amountBrl
+        //bankAccount.transferFundsBetweenEthereumAccounts(
+        //    buyerPrivateKey,
+        //    contractAddress,
+        //    amountBrl
+        //)
+
+        // Chamar a função buyProperty() no contrato para confirmar a compra
+        val transactionReceipt = contract.buyProperty(priceInWei).send().also {
+            //Atualiza saldo contas comprador e vendedor
+            bankAccount.updateBalanceBankAccounts(
+                cpfBuyer,
+                cpfSeller
             )
         }
 
-        // Chamar a função buyProperty() no contrato para confirmar a compra
-        val transactionReceipt = contract.buyProperty(priceInWei).send()
-
-        val contractEntity = contractRepository.findByRegisterProperty(registerProperty)
-
-        contractEntity.hashContractTransaction = transactionReceipt.transactionHash
-
-        contractRepository.save(contractEntity)
+        // Salva o hash da transacao no contrato
+        saveContract(
+            registerProperty,
+            transactionReceipt.transactionHash
+        )
 
         return "Compra realizada com sucesso! Hash da transação: ${transactionReceipt.transactionHash}"
     }
+
+    private fun saveContract(
+        registerProperty: String,
+        transactionHash: String
+    ) {
+        val contractEntity = contractRepository.findByRegisterProperty(registerProperty)
+
+        contractEntity.hashContractTransaction = transactionHash
+
+        contractRepository.save(contractEntity)
+    }
 }
+
 
 
 

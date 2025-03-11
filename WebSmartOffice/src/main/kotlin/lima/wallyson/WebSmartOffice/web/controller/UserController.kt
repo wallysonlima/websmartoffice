@@ -1,21 +1,26 @@
 package lima.wallyson.WebSmartOffice.web.controller
 
+import lima.wallyson.WebSmartOffice.application.usecase.BankAccountUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
 import lima.wallyson.WebSmartOffice.web.dtos.BuyPropertyRequestDTO
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.math.BigDecimal
 
 @RestController
 @RequestMapping("/api/user")
 class UserController(
-    val propertyUseCase: PropertyUseCase
+    val propertyUseCase: PropertyUseCase,
+    val bankAccountUseCase: BankAccountUseCase
 ) {
 
-    @PostMapping
+    @PostMapping("/buyProperty")
     fun buyProperty(
         @RequestBody buyPropertyRequest: BuyPropertyRequestDTO
     ): ResponseEntity<String> {
@@ -28,5 +33,12 @@ class UserController(
                     buyPropertyRequest.contractAddress
                 )
             )
+    }
+
+    @GetMapping("/balance")
+    fun getBalance(
+        @RequestParam ethereumAddress: String
+    ): BigDecimal {
+        return bankAccountUseCase.getBalanceInBrl(ethereumAddress)
     }
 }

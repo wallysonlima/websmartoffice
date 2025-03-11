@@ -90,23 +90,24 @@ class BankAccountUseCase(
         return transactionReceipt.transactionHash
     }
 
-    fun transferFundsBetweenBankAccounts(
+    fun updateBalanceBankAccounts(
         cpfBuyer: String,
-        amount: BigDecimal,
         cpfSeller: String
     ) {
         val buyerBank = bankAccountRepository.findBankAccountByBankCpf(cpfBuyer)
         val sellerBank = bankAccountRepository.findBankAccountByBankCpf(cpfSeller)
 
-        if ( (buyerBank.balance - amount) > (0).toBigDecimal() ) {
-            buyerBank.balance = buyerBank.balance - amount
-            bankAccountRepository.save(buyerBank)
+        println("Balance BuyerBank Before: " + buyerBank.balance)
+        println("Balance SellerBank Before: " + sellerBank.balance)
 
-            sellerBank.balance = sellerBank.balance + amount
-            bankAccountRepository.save(sellerBank)
-        } else {
-            throw IllegalStateException("Você tem saldo insuficiente para realizar a operação!.")
-        }
+        buyerBank.balance = getBalanceInBrl(buyerBank.ethAddress)
+        sellerBank.balance = getBalanceInBrl(sellerBank.ethAddress)
+
+        println("Balance BuyerBank After: " + buyerBank.balance)
+        println("Balance SellerBank After: " + sellerBank.balance)
+        
+        bankAccountRepository.save(buyerBank)
+        bankAccountRepository.save(sellerBank)
     }
 
     fun convertFromEthToBrl(priceInWei: BigDecimal): BigDecimal {
