@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.AddressEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PropertyEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.AddressRepository
+import lima.wallyson.WebSmartOffice.infraestructure.database.repository.ContractRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PropertyRepository
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
@@ -22,6 +23,7 @@ class PropertyUseCase(
     val propertyRepository: PropertyRepository,
     val addressRepository: AddressRepository,
     val bankAccount: BankAccountUseCase,
+    val contractRepository: ContractRepository,
     val web3j: Web3j
 ) {
     private val log: Logger = LoggerFactory.getLogger(PropertyUseCase::class.java)
@@ -75,6 +77,7 @@ class PropertyUseCase(
     fun buyProperty(
         cpfBuyer: String,
         cpfSeller: String,
+        registerProperty: String,
         buyerPrivateKey: String,
         contractAddress: String
     ): String {
@@ -108,6 +111,12 @@ class PropertyUseCase(
 
         // Chamar a função buyProperty() no contrato para confirmar a compra
         val transactionReceipt = contract.buyProperty(priceInWei).send()
+
+        val contractEntity = contractRepository.findByRegisterProperty(registerProperty)
+
+        contractEntity.hashContractTransaction = transactionReceipt.transactionHash
+
+        contractRepository.save(contractEntity)
 
         return "Compra realizada com sucesso! Hash da transação: ${transactionReceipt.transactionHash}"
     }

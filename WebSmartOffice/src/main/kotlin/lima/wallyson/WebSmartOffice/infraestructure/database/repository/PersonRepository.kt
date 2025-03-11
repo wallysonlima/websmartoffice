@@ -4,7 +4,7 @@ import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonsEntit
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
 
-interface PersonRepository : JpaRepository<PersonsEntity, Long> {
+interface PersonRepository : JpaRepository<PersonsEntity, String> {
     fun existsByCpf(cpf: String): Boolean
 
     fun findByCpf(cpf: String): PersonsEntity?

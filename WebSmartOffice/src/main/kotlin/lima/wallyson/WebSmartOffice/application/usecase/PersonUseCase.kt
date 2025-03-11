@@ -28,9 +28,9 @@ class PersonUseCase(
     fun register(request: PersonRequestDTO): PersonResponseDTO {
         log.info("c=RegisterPersonUseCase, m=register, i=init")
 
-        if (personRepository.existsByCpf(request.cpf)) {
-            throw IllegalArgumentException("Erro, CPF Já existe!")
-        }
+        //if (personRepository.existsByCpf(request.cpf)) {
+        //    throw IllegalArgumentException("Erro, CPF Já existe!")
+        //}
 
         try {
             personRepository.save(

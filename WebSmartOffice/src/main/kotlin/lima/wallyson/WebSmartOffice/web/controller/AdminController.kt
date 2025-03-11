@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
 
 @RestController
 @RequestMapping("/api/admin")
@@ -58,15 +56,19 @@ class AdminController(
     }
 
     @PostMapping("/property/signContract")
-    fun signContract(@RequestParam contractRequest: ContractRequestDTO): ResponseEntity<String> {
+    fun signContract(
+        @RequestBody contractRequest: ContractRequestDTO
+    ): ResponseEntity<String> {
         return ResponseEntity.status(HttpStatus.CREATED).body(
             smartContractUseCase.deployContract(
-                contractRequest.contractAddress,
-                contractRequest.propertyAddress,
+                contractRequest.cpfBuyer,
+                contractRequest.cpfSeller,
+                contractRequest.privateKeyFromBankAccount,
+                contractRequest.address,
                 contractRequest.propertySize,
                 contractRequest.priceInBrl,
-                UUID.randomUUID().toString(),
-                UUID.randomUUID().toString(),
+                contractRequest.registerProperty,
+                contractRequest.notarialDeed,
             )
         )
     }
