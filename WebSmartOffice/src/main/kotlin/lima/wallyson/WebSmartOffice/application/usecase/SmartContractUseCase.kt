@@ -8,6 +8,7 @@ import org.web3j.crypto.Credentials
 import org.web3j.tx.gas.DefaultGasProvider
 import java.math.BigInteger
 import org.web3j.protocol.Web3j
+import org.web3j.utils.Convert
 import java.math.BigDecimal
 
 @Service
@@ -27,8 +28,9 @@ class SmartContractUseCase(
         registerProperty: String,
         notarialDeed: String
     ): String {
-        val ethPriceInWei = bankAccountUseCase.getEthereumPrice() // Convertendo para BigDecimal
-        val priceInWei = (priceInBrl / ethPriceInWei).toBigInteger()  // Convertendo corretamente para WEI
+        val ethPriceInBrl = bankAccountUseCase.getEthereumPrice() // Exemplo: 1 ETH = 10.000 BRL
+        val priceInEth = priceInBrl / ethPriceInBrl // BRL → ETH
+        val priceInWei = Convert.toWei(priceInEth, Convert.Unit.ETHER).toBigInteger()
         val credentials = Credentials.create(privateKeyFromBankAccount)
 
         val contract = PropertySale.deploy(
@@ -48,5 +50,3 @@ class SmartContractUseCase(
         return contract.contractAddress
     }
 }
-
-

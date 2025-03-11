@@ -93,7 +93,6 @@ class PropertyUseCase(
 
         // Obter o preço do imóvel diretamente do contrato
         val priceInWei = contract.priceInWei.send()
-        val amountBrl = bankAccount.convertFromEthToBrl(priceInWei.toBigDecimal())
 
         //bankAccount.transferFundsBetweenEthereumAccounts(
         //    buyerPrivateKey,
