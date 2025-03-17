@@ -1,0 +1,41 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">WebSmartOffice</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/main">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/settings">Configurações</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-danger" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Banner -->
+<header class="banner d-flex align-items-center text-center text-white">
+  <div class="container">
+    <h1>Bem-vindo ao WebSmartOffice</h1>
+    <p class="lead">Gerencie seu escritório de forma eficiente e segura</p>
+  </div>
+</header>
+
+<!-- Área onde o conteúdo das rotas será exibido -->
+<div class="container container-custom mt-4">
+  <router-outlet></router-outlet> <!-- ✅ Carrega dinamicamente as páginas -->
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-center text-white py-3 mt-5">
+  <p>&copy; 2025 WebSmartOffice. Todos os direitos reservados.</p>
+</footer>

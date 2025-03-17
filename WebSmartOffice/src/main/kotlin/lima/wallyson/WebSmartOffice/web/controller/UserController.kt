@@ -1,5 +1,6 @@
 package lima.wallyson.WebSmartOffice.web.controller
 
+import jakarta.servlet.http.HttpServletRequest
 import lima.wallyson.WebSmartOffice.application.usecase.BankAccountUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
 import lima.wallyson.WebSmartOffice.web.dtos.BuyPropertyRequestDTO
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 class UserController(
     val propertyUseCase: PropertyUseCase,
     val bankAccountUseCase: BankAccountUseCase
@@ -40,5 +41,11 @@ class UserController(
         @RequestParam ethereumAddress: String
     ): BigDecimal {
         return bankAccountUseCase.getBalanceInBrl(ethereumAddress)
+    }
+
+    @GetMapping
+    fun getUser(request: HttpServletRequest): Map<String, Any> {
+        val isAuthenticated = request.userPrincipal != null
+        return mapOf("authenticated" to isAuthenticated, "username" to request.userPrincipal?.name) as Map<String, Any>
     }
 }

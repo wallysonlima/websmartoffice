@@ -1,0 +1,29 @@
+.banner {
+    position: relative;
+    height: 300px;
+    background-image: url('https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1600&h=400&fit=crop'); // ✅ Caminho correto para a imagem local
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+  }
+
+  .container-custom {
+    height: 460px;
+}
+  
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  footer {
+    position: relative;
+    width: 100%;
+    bottom: 0;
+  }
+  

@@ -8,35 +8,57 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
-
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.ProviderManager
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+import org.springframework.web.cors.CorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val personDetails: PersonDetailsUseCase
+    private val personDetails: PersonDetailsUseCase,
+    private val corsConfigurationSource: CorsConfigurationSource
 ) {
     @Bean
-    fun passwordEncoder(): PasswordEncoder{
+    fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
+    }
+
+    @Bean
+    fun authenticationManager(): AuthenticationManager {
+        val authProvider = DaoAuthenticationProvider()
+        authProvider.setUserDetailsService(personDetails)
+        authProvider.setPasswordEncoder(passwordEncoder())
+        return ProviderManager(authProvider)
     }
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
+            .cors { it.configurationSource(corsConfigurationSource) }
             .csrf { it.disable() }
+            .headers { headers -> headers.frameOptions { it.disable() } }
             .authorizeHttpRequests { requests ->
                 requests.requestMatchers(
-                        "/swagger-ui/index.html#/api-controller/**",
-                        "/swagger-ui.html",
-                        "/webjars/**",
-                        "/swagger-resources/**"
-                    ).permitAll()
+                    "/auth/**",
+                    "/auth/logout",
+                    "/swagger-ui/**",
+                    "/webjars/**",
+                    "/swagger-resources/**"
+                ).permitAll()
                 requests.requestMatchers("/admin/**").hasRole("ADMIN")
                 requests.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 requests.anyRequest().authenticated()
-            }.userDetailsService(personDetails)
-            .formLogin { it.defaultSuccessUrl("/home", true) }
-            .logout { it.logoutUrl("/logout").logoutSuccessUrl("/") }
+            }
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.ALWAYS) } // ✅ Garante que a sessão é criada
+            .formLogin { it.disable() } // 🔹 Desativa o login automático do Spring Security
+            .logout { logout ->
+                logout.logoutUrl("/auth/logout") // ✅ Define a URL do logout
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll()
+            }
 
         return http.build()
     }

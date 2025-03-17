@@ -1,0 +1,37 @@
+// Estilização do container da tela de login
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #508bfc, #6a11cb);
+}
+
+// Cartão de login (box onde ficam os inputs)
+.login-card {
+  width: 350px;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  text-align: center;
+}
+
+// Estilos dos inputs
+.mat-form-field {
+  width: 100%;
+}
+
+// Botão de login
+button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+// Responsividade para telas menores
+@media (max-width: 480px) {
+  .login-card {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
