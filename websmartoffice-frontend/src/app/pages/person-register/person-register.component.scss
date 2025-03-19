@@ -1,0 +1,12 @@
+// Estiliza campos inválidos
+.is-invalid {
+    border: 2px solid red !important;
+    background-color: #ffe6e6;
+  }
+  
+  .invalid-feedback {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+  

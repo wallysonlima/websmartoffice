@@ -6,22 +6,39 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth';
+  private apiUrl = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) {}
 
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials, {
-      withCredentials: true, // Permite o uso de cookies para autenticação baseada em sessão
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }) // Garante o formato correto
+    const headers = new HttpHeaders({
+        'Content-Type': 'application/json' // ✅ Define o Content-Type como JSON
+    });
+    
+    return new Observable(observer => {
+      this.http.post(`${this.apiUrl}/login`, credentials, {headers}).subscribe({
+        next: (response: any) => {
+          localStorage.setItem('userEmail', response.email); // ✅ Armazena email do usuário
+          localStorage.setItem('userRole', JSON.stringify(response.roles)); // ✅ Armazena roles
+          observer.next(response);
+          observer.complete();
+        },
+        error: (error) => {
+          observer.error(error);
+        }
+      });
     });
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/logout`, {}, {
-        withCredentials: true, // Permite o uso de cookies para autenticação baseada em sessão
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }) // Garante o formato correto
-      });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userRole');
+    return this.http.post(`${this.apiUrl}/logout`, {}, { headers });
+  }
+
+  getUserRole(): string[] {
+    return JSON.parse(localStorage.getItem('userRole') || '[]'); // ✅ Obtém a role do usuário
   }
 
   getCurrentUser(): Observable<any> {

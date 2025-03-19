@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 class UserController(
     val propertyUseCase: PropertyUseCase,
     val bankAccountUseCase: BankAccountUseCase

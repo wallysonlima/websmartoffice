@@ -1,0 +1,74 @@
+<div class="container mt-4">
+    <h2 class="text-center">Cadastro de Propriedade</h2>
+  
+    <form (ngSubmit)="onSubmit()">
+      <div class="row">
+        <!-- CPF do Proprietário -->
+        <div class="col-md-6 mb-3">
+          <label for="personCpf" class="form-label">CPF do Proprietário</label>
+          <input type="text" class="form-control" id="personCpf" 
+            [(ngModel)]="propertyData.personCpf" name="personCpf" 
+            [class.is-invalid]="errors.personCpf">
+          <div *ngIf="errors.personCpf" class="invalid-feedback">
+            {{ errors.personCpf }}
+          </div>
+        </div>
+  
+        <!-- Registro da Propriedade -->
+        <div class="col-md-6 mb-3">
+          <label for="registerProperty" class="form-label">Registro da Propriedade</label>
+          <input type="text" class="form-control" id="registerProperty" 
+            [(ngModel)]="propertyData.registerProperty" name="registerProperty"
+            [class.is-invalid]="errors.registerProperty">
+          <div *ngIf="errors.registerProperty" class="invalid-feedback">
+            {{ errors.registerProperty }}
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <!-- Preço -->
+        <div class="col-md-6 mb-3">
+          <label for="price" class="form-label">Preço</label>
+          <input type="number" step="0.01" class="form-control" id="price"
+            [(ngModel)]="propertyData.price" name="price"
+            [class.is-invalid]="errors.price">
+          <div *ngIf="errors.price" class="invalid-feedback">
+            {{ errors.price }}
+          </div>
+        </div>
+      </div>
+  
+      <hr>
+  
+      <h4>Endereço</h4>
+  
+      <div class="row">
+        <!-- Rua -->
+        <div class="col-md-6 mb-3">
+          <label for="streetName" class="form-label">Rua</label>
+          <input type="text" class="form-control" id="streetName"
+            [(ngModel)]="propertyData.address.streetName" name="streetName"
+            [class.is-invalid]="errors.addressStreet">
+          <div *ngIf="errors.addressStreet" class="invalid-feedback">
+            {{ errors.addressStreet }}
+          </div>
+        </div>
+  
+        <!-- Cidade -->
+        <div class="col-md-6 mb-3">
+          <label for="city" class="form-label">Cidade</label>
+          <input type="text" class="form-control" id="city"
+            [(ngModel)]="propertyData.address.city" name="city"
+            [class.is-invalid]="errors.addressCity">
+          <div *ngIf="errors.addressCity" class="invalid-feedback">
+            {{ errors.addressCity }}
+          </div>
+        </div>
+      </div>
+  
+      <!-- Botão de Cadastro -->
+      <button type="submit" class="btn btn-primary w-100">Cadastrar Propriedade</button>
+    </form>
+  </div>
+  

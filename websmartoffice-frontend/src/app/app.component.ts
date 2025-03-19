@@ -13,9 +13,11 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   userSession: any = null;
+  isAdmin = false; // ✅ Define se o usuário é admin
 
   constructor(private authService: AuthService, private router: Router) {
     this.loadSession();
+    this.checkUserRole();
   }
 
   loadSession() {
@@ -45,5 +47,10 @@ export class AppComponent implements OnInit {
         console.error('❌ Erro ao fazer logout:', err);
       }
     });
+  }
+
+  checkUserRole() {
+    const roles = this.authService.getUserRole();
+    this.isAdmin = roles.includes('ROLE_ADMIN'); // ✅ Verifica se o usuário tem a role ADMIN
   }
 }

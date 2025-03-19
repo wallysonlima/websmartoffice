@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 class AuthController(
     private val authenticationManager: AuthenticationManager // Agora o Spring consegue injetar!
 ) {
@@ -25,9 +25,10 @@ class AuthController(
             SecurityContextHolder.getContext().authentication = authentication
 
             val user = authentication.principal as org.springframework.security.core.userdetails.User
+            val roles = user.authorities.map { it.authority }
             println("✅ Usuário autenticado com sucesso: ${user.username}")
 
-            return ResponseEntity.ok(mapOf("email" to user.username, "roles" to user.authorities))
+            return ResponseEntity.ok(mapOf("email" to loginRequest.email, "roles" to roles))
         } catch (e: Exception) {
             println("❌ Erro na autenticação: ${e.message}")
             return ResponseEntity.status(401).body("Usuário ou senha inválidos")

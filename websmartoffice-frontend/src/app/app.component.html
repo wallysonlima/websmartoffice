@@ -11,11 +11,15 @@
         <li class="nav-item">
           <a class="nav-link active" routerLink="/main">Dashboard</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/settings">Configurações</a>
+         <!-- 🔹 Apenas para ADMIN -->
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link active" routerLink="/register/person">Cadastrar Usuário</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link active" routerLink="/register/property">Cadastrar Propriedade</a>
         </li>
         <li class="nav-item">
-          <button class="btn btn-danger" (click)="logout()">Logout</button>
+          <a class="nav-link" routerLink="/settings">Configurações</a>
         </li>
       </ul>
     </div>
