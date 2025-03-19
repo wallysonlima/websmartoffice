@@ -8,3 +8,4 @@ data class PropertyRequestDTO (
     val size: String,
     val address: AddressRequestDTO
 )
+
