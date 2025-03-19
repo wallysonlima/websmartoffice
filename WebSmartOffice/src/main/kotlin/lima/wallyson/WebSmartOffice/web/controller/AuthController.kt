@@ -1,10 +1,13 @@
 package lima.wallyson.WebSmartOffice.web.controller
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -35,32 +38,32 @@ class AuthController(
         }
     }
 
-//    @PostMapping("/logout")
-//    fun logout(request: HttpServletRequest, response: HttpServletResponse): ResponseEntity<String> {
-//        val authentication = SecurityContextHolder.getContext().authentication
-//
-//        if (authentication == null || !authentication.isAuthenticated) {
-//            println("❌ Nenhum usuário autenticado para fazer logout!")
-//            return ResponseEntity.status(403).body("Nenhum usuário autenticado para logout")
-//        }
-//
-//        println("🔹 Usuário autenticado: ${authentication.name}, realizando logout...")
-//
-//        // Remove autenticação e invalida a sessão
-//        SecurityContextLogoutHandler().logout(request, response, authentication)
-//
-//        return ResponseEntity.ok("Logout realizado com sucesso!")
-//    }
-//
-//    @GetMapping("/me")
-//    fun getCurrentUser(): ResponseEntity<Any> {
-//        val authentication = SecurityContextHolder.getContext().authentication
-//        return if (authentication.isAuthenticated) {
-//            ResponseEntity.ok(mapOf("user" to authentication.name, "roles" to authentication.authorities))
-//        } else {
-//            ResponseEntity.status(401).body("Usuário não autenticado")
-//        }
-//    }
+    @PostMapping("/logout")
+    fun logout(request: HttpServletRequest, response: HttpServletResponse): ResponseEntity<String> {
+        val authentication = SecurityContextHolder.getContext().authentication
+
+        if (authentication == null || !authentication.isAuthenticated) {
+            println("❌ Nenhum usuário autenticado para fazer logout!")
+            return ResponseEntity.status(403).body("Nenhum usuário autenticado para logout")
+        }
+
+        println("🔹 Usuário autenticado: ${authentication.name}, realizando logout...")
+
+        // Remove autenticação e invalida a sessão
+        SecurityContextLogoutHandler().logout(request, response, authentication)
+
+        return ResponseEntity.ok("Logout realizado com sucesso!")
+    }
+
+    @GetMapping("/me")
+    fun getCurrentUser(): ResponseEntity<Any> {
+        val authentication = SecurityContextHolder.getContext().authentication
+        return if (authentication.isAuthenticated) {
+            ResponseEntity.ok(mapOf("user" to authentication.name, "roles" to authentication.authorities))
+        } else {
+            ResponseEntity.status(401).body("Usuário não autenticado")
+        }
+    }
 }
 
 data class LoginRequest(val email: String, val password: String)
