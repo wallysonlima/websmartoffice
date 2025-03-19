@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 class AuthController(
     private val authenticationManager: AuthenticationManager // Agora o Spring consegue injetar!
 ) {
