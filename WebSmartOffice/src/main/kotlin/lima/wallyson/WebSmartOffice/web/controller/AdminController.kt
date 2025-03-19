@@ -24,7 +24,7 @@ class AdminController(
     private val propertyUseCase: PropertyUseCase,
     private val smartContractUseCase: SmartContractUseCase
 ) {
-    @PostMapping("/person/register")
+    @PostMapping("/register/person")
     fun personRegister(
         @RequestBody request: PersonRequestDTO
     ): ResponseEntity<PersonResponseDTO> {
@@ -33,7 +33,7 @@ class AdminController(
         )
     }
 
-    @PostMapping("/property/register")
+    @PostMapping("/register/property")
     fun propertyRegister(
         @RequestBody request: PropertyRequestDTO
     ): ResponseEntity<PropertyResponseDTO> {
