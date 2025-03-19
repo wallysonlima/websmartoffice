@@ -1,6 +1,30 @@
-@import 'app/pages/home/home.component.scss'; // ✅ Importa manualmente o SCSS
+@import 'app/pages/home/home.component.scss';
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+footer {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
 }

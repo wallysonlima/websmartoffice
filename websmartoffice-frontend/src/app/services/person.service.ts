@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PersonService {
-  private apiUrl = 'http://localhost:8080/api/admin/person'; // 🔹 Ajuste conforme necessário
+  private apiUrl = 'http://localhost:8080/admin/register'; // 🔹 Ajuste conforme necessário
 
   constructor(private http: HttpClient) {}
 
   register(personData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, personData);
+    return this.http.post(`${this.apiUrl}/person`, personData);
   }
 }

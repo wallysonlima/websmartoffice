@@ -9,9 +9,7 @@
           <input type="text" class="form-control" id="name"
             [(ngModel)]="personData.name" name="name"
             [class.is-invalid]="errors.name">
-          <div *ngIf="errors.name" class="invalid-feedback">
-            {{ errors.name }}
-          </div>
+          <div *ngIf="errors.name" class="invalid-feedback">{{ errors.name }}</div>
         </div>
   
         <!-- Email -->
@@ -20,9 +18,52 @@
           <input type="email" class="form-control" id="email"
             [(ngModel)]="personData.email" name="email"
             [class.is-invalid]="errors.email">
-          <div *ngIf="errors.email" class="invalid-feedback">
-            {{ errors.email }}
-          </div>
+          <div *ngIf="errors.email" class="invalid-feedback">{{ errors.email }}</div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <!-- Senha -->
+        <div class="col-md-6 mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="password"
+            [(ngModel)]="personData.password" name="password"
+            [class.is-invalid]="errors.password">
+          <div *ngIf="errors.password" class="invalid-feedback">{{ errors.password }}</div>
+        </div>
+  
+        <!-- Telefone -->
+        <div class="col-md-6 mb-3">
+          <label for="phoneNumber" class="form-label">Telefone</label>
+          <input type="text" class="form-control" id="phoneNumber"
+            [(ngModel)]="personData.phoneNumber" name="phoneNumber"
+            [class.is-invalid]="errors.phoneNumber">
+          <div *ngIf="errors.phoneNumber" class="invalid-feedback">{{ errors.phoneNumber }}</div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <!-- Data de Nascimento -->
+        <div class="col-md-6 mb-3">
+          <label for="dateBirth" class="form-label">Data de Nascimento</label>
+          <input type="date" class="form-control" id="dateBirth"
+            [(ngModel)]="personData.dateBirth" name="dateBirth"
+            [class.is-invalid]="errors.dateBirth">
+          <div *ngIf="errors.dateBirth" class="invalid-feedback">{{ errors.dateBirth }}</div>
+        </div>
+  
+        <!-- Gênero -->
+        <div class="col-md-6 mb-3">
+          <label for="gender" class="form-label">Gênero</label>
+          <select class="form-control" id="gender"
+            [(ngModel)]="personData.gender" name="gender"
+            [class.is-invalid]="errors.gender">
+            <option value="">Selecione...</option>
+            <option value="MASCULINO">Masculino</option>
+            <option value="FEMININO">Feminino</option>
+            <option value="OUTRO">Outro</option>
+          </select>
+          <div *ngIf="errors.gender" class="invalid-feedback">{{ errors.gender }}</div>
         </div>
       </div>
   
@@ -33,24 +74,82 @@
           <input type="text" class="form-control" id="cpf"
             [(ngModel)]="personData.cpf" name="cpf"
             [class.is-invalid]="errors.cpf">
-          <div *ngIf="errors.cpf" class="invalid-feedback">
-            {{ errors.cpf }}
-          </div>
+          <div *ngIf="errors.cpf" class="invalid-feedback">{{ errors.cpf }}</div>
         </div>
   
+        <!-- RG -->
+        <div class="col-md-6 mb-3">
+          <label for="rg" class="form-label">RG</label>
+          <input type="text" class="form-control" id="rg"
+            [(ngModel)]="personData.rg" name="rg"
+            [class.is-invalid]="errors.rg">
+          <div *ngIf="errors.rg" class="invalid-feedback">{{ errors.rg }}</div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <!-- Estado Civil -->
+        <div class="col-md-6 mb-3">
+          <label for="civilState" class="form-label">Estado Civil</label>
+          <input type="text" class="form-control" id="civilState"
+            [(ngModel)]="personData.civilState" name="civilState"
+            [class.is-invalid]="errors.civilState">
+          <div *ngIf="errors.civilState" class="invalid-feedback">{{ errors.civilState }}</div>
+        </div>
+  
+        <!-- Role -->
+        <div class="col-md-6 mb-3">
+          <label for="role" class="form-label">Cargo</label>
+          <input type="text" class="form-control" id="role"
+            [(ngModel)]="personData.role" name="role"
+            [class.is-invalid]="errors.role">
+          <div *ngIf="errors.role" class="invalid-feedback">{{ errors.role }}</div>
+        </div>
+      </div>
+  
+      <hr>
+      <h4>Dados Bancários</h4>
+  
+      <div class="row">
         <!-- CPF da Conta Bancária -->
         <div class="col-md-6 mb-3">
           <label for="bankCpf" class="form-label">CPF da Conta Bancária</label>
           <input type="text" class="form-control" id="bankCpf"
             [(ngModel)]="personData.bankAccount.bankCpf" name="bankCpf"
             [class.is-invalid]="errors.bankCpf">
-          <div *ngIf="errors.bankCpf" class="invalid-feedback">
-            {{ errors.bankCpf }}
-          </div>
+          <div *ngIf="errors.bankCpf" class="invalid-feedback">{{ errors.bankCpf }}</div>
+        </div>
+  
+        <!-- Chave Privada -->
+        <div class="col-md-6 mb-3">
+          <label for="privateKey" class="form-label">Chave Privada</label>
+          <input type="text" class="form-control" id="privateKey"
+            [(ngModel)]="personData.bankAccount.privateKey" name="privateKey"
+            [class.is-invalid]="errors.privateKey">
+          <div *ngIf="errors.privateKey" class="invalid-feedback">{{ errors.privateKey }}</div>
         </div>
       </div>
   
-      <!-- Botão de Cadastro -->
+      <div class="row">
+        <!-- Endereço Ethereum -->
+        <div class="col-md-6 mb-3">
+          <label for="ethAddress" class="form-label">Endereço Ethereum</label>
+          <input type="text" class="form-control" id="ethAddress"
+            [(ngModel)]="personData.bankAccount.ethAddress" name="ethAddress"
+            [class.is-invalid]="errors.ethAddress">
+          <div *ngIf="errors.ethAddress" class="invalid-feedback">{{ errors.ethAddress }}</div>
+        </div>
+  
+        <!-- Saldo -->
+        <div class="col-md-6 mb-3">
+          <label for="balance" class="form-label">Saldo</label>
+          <input type="number" step="0.01" class="form-control" id="balance"
+            [(ngModel)]="personData.bankAccount.balance" name="balance"
+            [class.is-invalid]="errors.balance">
+          <div *ngIf="errors.balance" class="invalid-feedback">{{ errors.balance }}</div>
+        </div>
+      </div>
+  
       <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
     </form>
   </div>

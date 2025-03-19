@@ -1,32 +1,33 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">WebSmartOffice</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="/main">Dashboard</a>
-        </li>
-         <!-- 🔹 Apenas para ADMIN -->
+<div class="d-flex flex-column min-vh-100">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">WebSmartOffice</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/main">Dashboard</a>
+          </li>
+           <!-- 🔹 Apenas para ADMIN -->
         <li class="nav-item" *ngIf="isAdmin">
           <a class="nav-link active" routerLink="/register/person">Cadastrar Usuário</a>
         </li>
         <li class="nav-item" *ngIf="isAdmin">
           <a class="nav-link active" routerLink="/register/property">Cadastrar Propriedade</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/settings">Configurações</a>
-        </li>
-      </ul>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/settings">Configurações</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- Banner -->
+  <!-- Banner -->
 <header class="banner d-flex align-items-center text-center text-white">
   <div class="container">
     <h1>Bem-vindo ao WebSmartOffice</h1>
@@ -34,12 +35,13 @@
   </div>
 </header>
 
-<!-- Área onde o conteúdo das rotas será exibido -->
-<div class="container container-custom mt-4">
-  <router-outlet></router-outlet> <!-- ✅ Carrega dinamicamente as páginas -->
-</div>
+  <!-- Conteúdo Principal -->
+  <div class="container main-container flex-grow-1 mt-4">
+    <router-outlet></router-outlet> <!-- ✅ Carrega dinamicamente as páginas -->
+  </div>
 
-<!-- Footer -->
-<footer class="bg-dark text-center text-white py-3 mt-5">
-  <p>&copy; 2025 WebSmartOffice. Todos os direitos reservados.</p>
-</footer>
+  <!-- Footer -->
+  <footer class="bg-dark text-center text-white py-3">
+    <p>&copy; 2025 WebSmartOffice. Todos os direitos reservados.</p>
+  </footer>
+</div>

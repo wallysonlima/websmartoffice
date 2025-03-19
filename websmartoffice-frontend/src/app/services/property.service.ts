@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PropertyService {
-  private apiUrl = 'http://localhost:8080/api/admin/property'; // 🔹 Ajuste conforme necessário
+  private apiUrl = 'http://localhost:8080/admin/register'; // 🔹 Ajuste conforme necessário
 
   constructor(private http: HttpClient) {}
 
   register(propertyData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, propertyData);
+    return this.http.post(`${this.apiUrl}/property`, propertyData);
   }
 }

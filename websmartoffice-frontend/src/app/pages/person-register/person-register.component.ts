@@ -53,37 +53,37 @@ export class PersonRegisterComponent {
     return remainder === parseInt(cpf.charAt(10));
   }
 
-  // ✅ Valida se todos os campos foram preenchidos corretamente
+  // ✅ Validação dos campos obrigatórios e CPF
   validateFields(): boolean {
     this.errors = {}; // Limpa os erros antes de validar
 
-    if (!this.personData.name) {
-      this.errors.name = 'O nome é obrigatório!';
-    }
+    if (!this.personData.name) this.errors.name = 'O nome é obrigatório!';
+    if (!this.personData.email) this.errors.email = 'O e-mail é obrigatório!';
+    if (!this.personData.password) this.errors.password = 'A senha é obrigatória!';
+    if (!this.personData.phoneNumber) this.errors.phoneNumber = 'O telefone é obrigatório!';
+    if (!this.personData.dateBirth) this.errors.dateBirth = 'A data de nascimento é obrigatória!';
+    if (!this.personData.gender) this.errors.gender = 'O gênero é obrigatório!';
+    if (!this.personData.rg) this.errors.rg = 'O RG é obrigatório!';
+    if (!this.personData.civilState) this.errors.civilState = 'O estado civil é obrigatório!';
+    if (!this.personData.role) this.errors.role = 'O cargo é obrigatório!';
 
-    if (!this.personData.email) {
-      this.errors.email = 'O e-mail é obrigatório!';
-    }
-
-    if (!this.personData.password) {
-      this.errors.password = 'A senha é obrigatória!';
-    }
-
-    if (!this.personData.phoneNumber) {
-      this.errors.phoneNumber = 'O telefone é obrigatório!';
-    }
-
+    // Valida CPF
     if (!this.personData.cpf) {
       this.errors.cpf = 'O CPF é obrigatório!';
     } else if (!this.isValidCPF(this.personData.cpf)) {
       this.errors.cpf = 'O CPF informado é inválido!';
     }
 
+    // Valida CPF do banco
     if (!this.personData.bankAccount.bankCpf) {
       this.errors.bankCpf = 'O CPF da conta bancária é obrigatório!';
     } else if (!this.isValidCPF(this.personData.bankAccount.bankCpf)) {
       this.errors.bankCpf = 'O CPF da conta bancária é inválido!';
     }
+
+    if (!this.personData.bankAccount.privateKey) this.errors.privateKey = 'A chave privada é obrigatória!';
+    if (!this.personData.bankAccount.ethAddress) this.errors.ethAddress = 'O endereço Ethereum é obrigatório!';
+    if (!this.personData.bankAccount.balance) this.errors.balance = 'O saldo inicial é obrigatório!';
 
     return Object.keys(this.errors).length === 0; // Retorna true se não houver erros
   }

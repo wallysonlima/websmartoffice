@@ -51,7 +51,7 @@ export class PropertyRegisterComponent {
     return remainder === parseInt(cpf.charAt(10));
   }
 
-  // ✅ Função para validar os campos
+  // ✅ Valida os campos obrigatórios e CPF
   validateFields(): boolean {
     this.errors = {}; // Limpa os erros antes de validar
 
@@ -65,20 +65,33 @@ export class PropertyRegisterComponent {
       this.errors.registerProperty = 'O registro da propriedade é obrigatório!';
     }
 
+    if (!this.propertyData.notarialDeed) {
+      this.errors.notarialDeed = 'A escritura notarial é obrigatória!';
+    }
+
     if (!this.propertyData.price || this.propertyData.price <= 0) {
       this.errors.price = 'O preço deve ser maior que zero!';
     }
 
+    if (!this.propertyData.size) {
+      this.errors.size = 'O tamanho da propriedade é obrigatório!';
+    }
+
+    // Validação do endereço
     if (!this.propertyData.address.streetName) {
-      this.errors.addressStreet = 'A rua é obrigatória!';
+      this.errors.streetName = 'A rua é obrigatória!';
     }
 
     if (!this.propertyData.address.city) {
-      this.errors.addressCity = 'A cidade é obrigatória!';
+      this.errors.city = 'A cidade é obrigatória!';
     }
 
     if (!this.propertyData.address.state) {
-      this.errors.addressState = 'O estado é obrigatório!';
+      this.errors.state = 'O estado é obrigatório!';
+    }
+
+    if (!this.propertyData.address.postalCode) {
+      this.errors.postalCode = 'O CEP é obrigatório!';
     }
 
     return Object.keys(this.errors).length === 0; // Retorna true se não houver erros
