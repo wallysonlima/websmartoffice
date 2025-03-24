@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Aplicação iniciada!'); // ✅ Debug para ver se o componente está sendo carregado
+    this.loadSession();
   }
 
   logout() {

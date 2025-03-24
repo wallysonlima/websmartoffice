@@ -1,6 +1,7 @@
 package lima.wallyson.WebSmartOffice.application.usecase
 
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.BankAccountRepository
+import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
 import org.json.JSONObject
 import org.springframework.stereotype.Service
 import org.web3j.crypto.Credentials
@@ -16,7 +17,8 @@ import java.net.URL
 @Service
 class BankAccountUseCase(
     private val web3j: Web3j,
-    private val bankAccountRepository: BankAccountRepository
+    private val bankAccountRepository: BankAccountRepository,
+    private val personRepository: PersonRepository
 ) {
     // Conta Hardhat que recebe os fundos antes de zerar a conta do usuário
     private val hardhatPrivateKey = "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113b37c84b63da4a06d6e3a10bc"
@@ -33,8 +35,11 @@ class BankAccountUseCase(
     }
 
     // Obtem o saldo em BRL da conta Ethereum
-    fun getBalanceInBrl(address: String): BigDecimal {
-        val amountInEth = getBalance(address)
+    fun getBalanceInBrl(email: String): BigDecimal {
+        val user = personRepository.findByEmail(email)
+        val bank = bankAccountRepository.findBankAccountByBankCpf(user.get().cpf)
+
+        val amountInEth = getBalance(bank.ethAddress)
         val ethPriceInBrl = getEthereumPrice()
 
         return amountInEth * ethPriceInBrl

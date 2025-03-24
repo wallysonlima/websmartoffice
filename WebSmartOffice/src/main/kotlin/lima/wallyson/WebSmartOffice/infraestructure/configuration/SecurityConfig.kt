@@ -48,7 +48,7 @@ class SecurityConfig(
                     "/swagger-resources/**"
                 ).permitAll()
                 requests.requestMatchers("/admin/**").hasRole("ADMIN")
-                requests.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                requests.requestMatchers("/user/**").permitAll()
                 requests.anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.ALWAYS) } // ✅ Garante que a sessão é criada

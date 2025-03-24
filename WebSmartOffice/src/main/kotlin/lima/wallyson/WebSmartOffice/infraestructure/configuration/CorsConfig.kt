@@ -16,6 +16,7 @@ class CorsConfig {
         configuration.allowCredentials = true // Permite o uso de cookies para sessão
         configuration.allowedHeaders = listOf("Authorization", "Content-Type", "X-Requested-With")
         configuration.exposedHeaders = listOf("Authorization")
+        configuration.allowedHeaders = listOf("*")
 
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)

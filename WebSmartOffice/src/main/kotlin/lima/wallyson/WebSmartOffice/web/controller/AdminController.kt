@@ -27,7 +27,7 @@ class AdminController(
     @PostMapping("/register/person")
     fun personRegister(
         @RequestBody request: PersonRequestDTO
-    ): ResponseEntity<PersonResponseDTO> {
+    ): ResponseEntity<String> {
         return ResponseEntity.status(HttpStatus.CREATED).body(
             personUseCase.register(request)
         )

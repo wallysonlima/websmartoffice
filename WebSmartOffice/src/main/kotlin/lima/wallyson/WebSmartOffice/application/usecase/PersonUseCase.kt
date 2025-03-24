@@ -5,6 +5,7 @@ import lima.wallyson.WebSmartOffice.infraestructure.database.entity.BankAccounts
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PersonsEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.BankAccountRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
+import lima.wallyson.WebSmartOffice.web.dtos.BankAccountResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import org.slf4j.Logger
@@ -23,7 +24,7 @@ class PersonUseCase(
     private val log: Logger = LoggerFactory.getLogger(PersonUseCase::class.java)
 
     @Transactional
-    fun register(request: PersonRequestDTO): PersonResponseDTO {
+    fun register(request: PersonRequestDTO): String {
         log.info("c=RegisterPersonUseCase, m=register, i=init")
 
         if (personRepository.existsByCpf(request.cpf)) {
@@ -56,11 +57,7 @@ class PersonUseCase(
                 )
 
                 log.info("c=RegisterPersonUseCase, m=register, i=end")
-                return PersonResponseDTO(
-                    cpf = savedPerson.cpf,
-                    name = savedPerson.name,
-                    email = savedPerson.email
-                )
+                return savedPerson.email
             }
         } catch (ex: Exception) {
             log.info("c=RegisterPersonUseCase, m=register, i=error, m=${ex.message}")
@@ -74,5 +71,23 @@ class PersonUseCase(
         if ( person == null ) IllegalArgumentException("Pessoa com o $cpf não encontrado !")
 
         personRepository.deleteByCpf(person?.cpf!!)
+    }
+
+    fun getPersonByEmail(email:String): PersonResponseDTO {
+        val person = personRepository.findByEmail(email)
+        val bankAccount = bankAccountRepository.findBankAccountByBankCpf(person.get().cpf)
+
+        return PersonResponseDTO(
+            cpf = person.get().cpf,
+            name = person.get().name,
+            email = person.get().email,
+            bankAccount = BankAccountResponseDTO(
+                bankCpf = person.get().cpf,
+                privateKey = bankAccount.privateKey,
+                ethAddress = bankAccount.ethAddress,
+                balance = bankAccount.balance
+            ),
+            role = person.get().role.toString()
+        )
     }
 }

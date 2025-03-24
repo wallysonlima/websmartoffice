@@ -33,4 +33,26 @@
     margin-top: 12.5%;
     width: 100%;
   }
+
+  .name {
+    position: absolute;
+    right: 220px;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: white;
+    font-size: 0.95rem;
+  }
+
+  .saldo{
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: white;
+    font-size: 0.95rem;
+  }
   

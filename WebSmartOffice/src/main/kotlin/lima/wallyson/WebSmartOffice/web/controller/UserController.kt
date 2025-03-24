@@ -2,8 +2,11 @@ package lima.wallyson.WebSmartOffice.web.controller
 
 import jakarta.servlet.http.HttpServletRequest
 import lima.wallyson.WebSmartOffice.application.usecase.BankAccountUseCase
+import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
+import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
 import lima.wallyson.WebSmartOffice.web.dtos.BuyPropertyRequestDTO
+import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,7 +21,8 @@ import java.math.BigDecimal
 @RequestMapping("/user")
 class UserController(
     val propertyUseCase: PropertyUseCase,
-    val bankAccountUseCase: BankAccountUseCase
+    val bankAccountUseCase: BankAccountUseCase,
+    val personUseCase: PersonUseCase
 ) {
 
     @PostMapping("/buyProperty")
@@ -38,9 +42,21 @@ class UserController(
 
     @GetMapping("/balance")
     fun getBalance(
-        @RequestParam ethereumAddress: String
+        @RequestParam email: String
     ): BigDecimal {
-        return bankAccountUseCase.getBalanceInBrl(ethereumAddress)
+        return bankAccountUseCase.getBalanceInBrl(email)
+    }
+
+    @GetMapping("/getUser")
+    fun getUserByEmail(
+        @RequestParam email: String
+    ): ResponseEntity<PersonResponseDTO> {
+        val response = ResponseEntity.status(HttpStatus.OK).body(
+            personUseCase.getPersonByEmail(email)
+        )
+
+        println("response:" + response)
+        return response
     }
 
     @GetMapping
