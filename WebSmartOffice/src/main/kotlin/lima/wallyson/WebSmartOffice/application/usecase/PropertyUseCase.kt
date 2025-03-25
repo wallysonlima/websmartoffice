@@ -118,6 +118,22 @@ class PropertyUseCase(
         return "Compra realizada com sucesso! Hash da transação: ${transactionReceipt.transactionHash}"
     }
 
+    fun getPropertiesFromUser(email:String): MutableList<PropertyResponseDTO> {
+        val user = personRepository.findByEmail(email)
+        var properties: MutableList<PropertyResponseDTO> = mutableListOf()
+        propertyRepository.findAll().map { prop ->
+           properties.add(PropertyResponseDTO(
+               cpfProperty = prop.propertyCpf!!,
+               registerProperty = prop.registerProperty,
+               notarialDeed = prop.notarialDeed,
+               price = prop.price,
+               size = prop.size
+           ))
+        }
+
+        return properties
+    }
+
     private fun saveContract(
         registerProperty: String,
         transactionHash: String

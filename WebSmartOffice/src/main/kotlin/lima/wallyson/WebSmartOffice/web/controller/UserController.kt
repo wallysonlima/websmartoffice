@@ -7,6 +7,7 @@ import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
 import lima.wallyson.WebSmartOffice.web.dtos.BuyPropertyRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
+import lima.wallyson.WebSmartOffice.web.dtos.PropertyResponseDTO
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,7 +23,7 @@ import java.math.BigDecimal
 class UserController(
     val propertyUseCase: PropertyUseCase,
     val bankAccountUseCase: BankAccountUseCase,
-    val personUseCase: PersonUseCase
+    val personUseCase: PersonUseCase,
 ) {
 
     @PostMapping("/buyProperty")
@@ -57,6 +58,15 @@ class UserController(
 
         println("response:" + response)
         return response
+    }
+
+    @GetMapping("/getPropertiesFromUser")
+    fun getPropertiesFromUser(
+        @RequestParam email: String
+    ): ResponseEntity<List<PropertyResponseDTO>> {
+        return ResponseEntity.status(HttpStatus.OK).body(
+            propertyUseCase.getPropertiesFromUser(email)
+        )
     }
 
     @GetMapping

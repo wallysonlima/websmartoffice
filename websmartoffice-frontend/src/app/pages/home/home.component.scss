@@ -1,8 +1,8 @@
 .user-card-container {
   max-width: 600px;       // 🔹 largura máxima
   width: 600px;            // 🔹 ocupa o máximo permitido
-  margin-left: -350px;         // 🔹 alinha à esquerda
   padding-left: 0;
+  margin: 0 auto;
 }
 
 .card {
@@ -15,13 +15,47 @@
   }
 }
 
-h2 {
+h2, h4 {
   font-weight: bold;
   color: #333;
 }
 
 #principal {
-    display: flex;
-    justify-content: flex-start; // 🔹 Alinha o conteúdo à esquerda
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center; // 🔹 Centraliza todo o conteúdo filho
+  padding: 1rem;
+}
+
+.properties-container {
+  max-width: 600px;
+  width: 500px; 
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.properties-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; // 🔹 Centraliza os cards
+  gap: 1.5rem; // 🔹 Espaçamento entre os cards
+}
+
+.properties-container .col-md-4 {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+}
+
+.row {
+  width: 100%;
+  margin: 0;
+}
+
+.col-md-4 {
+  flex: 0 0 auto;
+  width: 33.3333%; /* 3 cards por linha */
+  padding: 1rem;
+  box-sizing: border-box;
+}
