@@ -1,34 +1,31 @@
 <div class="container mt-4" id="principal">
-  <h2 class="text-center mb-4">Dashboard</h2>
 
   <!-- Cards Informativos -->
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card text-white bg-primary mb-3 shadow">
-        <div class="card-header">Usuários Ativos</div>
-        <div class="card-body">
-          <h5 class="card-title">1,230</h5>
-          <p class="card-text">Total de usuários atualmente ativos no sistema.</p>
+  <div class="row justify-content-start">
+    <div class="user-card-container">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Dados do Usuário</h5>
         </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card text-white bg-success mb-3 shadow">
-        <div class="card-header">Projetos Concluídos</div>
-        <div class="card-body">
-          <h5 class="card-title">256</h5>
-          <p class="card-text">Número de projetos finalizados com sucesso.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card text-white bg-danger mb-3 shadow">
-        <div class="card-header">Tarefas Pendentes</div>
-        <div class="card-body">
-          <h5 class="card-title">42</h5>
-          <p class="card-text">Total de tarefas que precisam ser concluídas.</p>
+        <div class="card-body" *ngIf="userSession">
+          <div class="row mb-3">
+            <div class="col-md-6"><strong>Nome:</strong> {{ userSession.name }}</div>
+            <div class="col-md-6"><strong>CPF:</strong> {{ userSession.cpf }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6"><strong>Data de Nascimento:</strong> {{ userSession.dateBirth }}</div>
+            <div class="col-md-6"><strong>Gênero:</strong> {{ userSession.gender }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6"><strong>Estado Civil:</strong> {{ userSession.civilState }}</div>
+            <div class="col-md-6"><strong>Email:</strong> {{ userSession.email }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6"><strong>Telefone:</strong> {{ userSession.phoneNumber }}</div>
+            <div class="col-md-6" *ngIf="userSession.bankAccount">
+              <strong>Saldo: R$ {{ userSession.bankAccount.balance | number: '1.2-2' }}</strong>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@
             <li class="name" *ngIf="userSession">
               <small><strong>{{ userSession.name }}</strong></small>
              </li>
-             <li class="saldo">
+             <li class="saldo" *ngIf="userSession">
               <small *ngIf="userSession.bankAccount"><strong>Saldo: R$ {{ userSession.bankAccount.balance | number: '1.2-2' }}</strong></small>
             </li>
         </ul>

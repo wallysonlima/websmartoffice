@@ -56,3 +56,12 @@
     font-size: 0.95rem;
   }
   
+  .navbar .nav-link {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .navbar .nav-link:hover {
+    background-color: #495057; // 🔹 Um cinza mais claro que o navbar
+    border-radius: 5px;
+    color: #ffffff !important; // Garante que o texto continue branco
+  }

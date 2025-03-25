@@ -79,8 +79,13 @@ class PersonUseCase(
 
         return PersonResponseDTO(
             cpf = person.get().cpf,
+            rg = person.get().rg,
             name = person.get().name,
             email = person.get().email,
+            phoneNumber = person.get().phoneNumber,
+            dateBirth = person.get().dateBirth,
+            gender = person.get().gender,
+            civilState = person.get().civilState,
             bankAccount = BankAccountResponseDTO(
                 bankCpf = person.get().cpf,
                 privateKey = bankAccount.privateKey,

@@ -12,8 +12,13 @@ export interface BankAccountResponseDTO {
 
 export interface PersonResponseDTO {
   cpf: string;
+  rg: string;
   name: string;
   email: string;
+  phoneNumber: string;
+  dateBirth: string;
+  gender: string;
+  civilState: string;
   bankAccount?: BankAccountResponseDTO;
   role: string;
 }

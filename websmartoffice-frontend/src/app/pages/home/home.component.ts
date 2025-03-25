@@ -12,10 +12,16 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, RouterModule] // ✅ Importando RouterModule para usar <router-outlet>
 })
 export class HomeComponent implements OnInit {
+  userSession: any = null;
+  
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     console.log('Aplicação iniciada!'); // ✅ Debug para ver se o componente está sendo carregado
+    const session = localStorage.getItem('userSession');
+    if ( session ) {
+      this.userSession = JSON.parse(session);
+    }
   }
 
   logout() {
