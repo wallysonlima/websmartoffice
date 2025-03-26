@@ -13,17 +13,23 @@
             <a class="nav-link active" routerLink="/main">Dashboard</a>
           </li>
            <!-- 🔹 Apenas para ADMIN -->
-          <li class="nav-item" *ngIf="isAdmin && userSession">
+          <li class="nav-item" *ngIf="userSession">
             <a class="nav-link active" routerLink="/register/person">Cadastrar Usuário</a>
           </li>
-          <li class="nav-item" *ngIf="isAdmin && userSession">
+          <li class="nav-item" *ngIf="userSession">
             <a class="nav-link active" routerLink="/register/property">Cadastrar Propriedade</a>
           </li>
-          <li class="nav-item" *ngIf="isAdmin && userSession">
+          <li class="nav-item" *ngIf="userSession">
             <a class="nav-link active" routerLink="/list/contract">Listar Contratos</a>
           </li>
           <li class="nav-item" *ngIf="userSession">
             <a class="nav-link active" routerLink="/buy/property">Comprar Imóvel</a>
+          </li>
+          <!-- 🔹 Logout -->
+          <li class="nav-item ms-3" *ngIf="userSession">
+            <button class="btn btn-outline-primary logout-button" (click)="logout()">
+              Logout
+            </button>
           </li>
           <!-- Dentro do <ul class="navbar-nav ms-auto"> -->
             <li class="name" *ngIf="userSession">

@@ -35,11 +35,8 @@ class BankAccountUseCase(
     }
 
     // Obtem o saldo em BRL da conta Ethereum
-    fun getBalanceInBrl(email: String): BigDecimal {
-        val user = personRepository.findByEmail(email)
-        val bank = bankAccountRepository.findBankAccountByBankCpf(user.get().cpf)
-
-        val amountInEth = getBalance(bank.ethAddress)
+    fun getBalanceInBrl(ethAddress: String): BigDecimal {
+        val amountInEth = getBalance(ethAddress)
         val ethPriceInBrl = getEthereumPrice()
 
         return amountInEth * ethPriceInBrl

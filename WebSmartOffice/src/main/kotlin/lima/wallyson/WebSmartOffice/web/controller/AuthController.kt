@@ -40,17 +40,7 @@ class AuthController(
 
     @PostMapping("/logout")
     fun logout(request: HttpServletRequest, response: HttpServletResponse): ResponseEntity<String> {
-        val authentication = SecurityContextHolder.getContext().authentication
-
-        if (authentication == null || !authentication.isAuthenticated) {
-            println("❌ Nenhum usuário autenticado para fazer logout!")
-            return ResponseEntity.status(403).body("Nenhum usuário autenticado para logout")
-        }
-
-        println("🔹 Usuário autenticado: ${authentication.name}, realizando logout...")
-
         // Remove autenticação e invalida a sessão
-        SecurityContextLogoutHandler().logout(request, response, authentication)
 
         return ResponseEntity.ok("Logout realizado com sucesso!")
     }

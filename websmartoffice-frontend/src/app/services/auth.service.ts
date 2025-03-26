@@ -34,7 +34,10 @@ export class AuthService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
-    return this.http.post(`${this.apiUrl}/logout`, {}, { headers });
+    return this.http.post('http://localhost:8080/auth/logout', {}, {
+      withCredentials: true,
+      responseType: 'text'  // 👈 isso é o que corrige o erro de parsing!
+    });
   }
 
   getUserRole(): string[] {

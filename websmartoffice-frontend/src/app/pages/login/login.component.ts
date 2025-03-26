@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './../../services/auth.service';
@@ -12,10 +12,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
   imports: [CommonModule, FormsModule] // ✅ Garante que [(ngModel)] funciona
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginData = { email: '', password: '' }; // ✅ Alterado para usar email
+  userSession: any = null;
 
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
+
+  ngOnInit(): void {
+    console.log('Aplicação iniciada!'); // ✅ Debug para ver se o componente está sendo carregado
+    const session = localStorage.getItem('userSession');
+    if ( session ) {
+      this.userSession = JSON.parse(session);
+    }
+  }
 
   onSubmit() {
     console.log('Tentando login com:', this.loginData); // ✅ Debug no console

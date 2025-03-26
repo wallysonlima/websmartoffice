@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,15 @@ export class PersonService {
   constructor(private http: HttpClient) {}
 
   register(personData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/person`, personData);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  
+    return this.http.post(`${this.apiUrl}/person`, personData, {
+      headers,
+      responseType: 'text' as 'json',  // 👈 Isso força a tratar como texto
+      withCredentials: true            // 👈 Se você precisa de sessão/cookie
+    });
   }
+
 }

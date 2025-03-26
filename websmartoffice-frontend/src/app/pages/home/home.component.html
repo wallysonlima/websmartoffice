@@ -11,10 +11,10 @@
         <div class="card-body" *ngIf="userSession">
           <div class="row mb-3">
             <div class="col-md-6"><strong>Nome:</strong> {{ userSession.name }}</div>
-            <div class="col-md-6"><strong>CPF:</strong> {{ userSession.cpf }}</div>
+            <div class="col-md-6"><strong>CPF:</strong> {{ formatCpf(userSession.cpf) }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-6"><strong>Data de Nascimento:</strong> {{ userSession.dateBirth }}</div>
+            <div class="col-md-6"><strong>Data de Nascimento:</strong> {{ formatDate(userSession.dateBirth) }}</div>
             <div class="col-md-6"><strong>Gênero:</strong> {{ userSession.gender }}</div>
           </div>
           <div class="row mb-3">
@@ -22,7 +22,7 @@
             <div class="col-md-6"><strong>Email:</strong> {{ userSession.email }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-6"><strong>Telefone:</strong> {{ userSession.phoneNumber }}</div>
+            <div class="col-md-6"><strong>Telefone:</strong> {{ formatPhone(userSession.phoneNumber) }}</div>
             <div class="col-md-6" *ngIf="userSession.bankAccount">
               <strong>Saldo: R$ {{ userSession.bankAccount.balance | number: '1.2-2' }}</strong>
             </div>

@@ -66,13 +66,17 @@
         <div class="col-md-6 mb-3">
           <label for="address" class="form-label">Endereço completo</label>
           <input type="text" class="form-control" id="address"
-            [(ngModel)]="propertyData.size" name="address"
-            [class.is-invalid]="errors.size">
-          <div *ngIf="errors.size" class="invalid-feedback">
-            {{ errors.size }}
+            [(ngModel)]="propertyData.address" name="address"
+            [class.is-invalid]="errors.address">
+          <div *ngIf="errors.address" class="invalid-feedback">
+            {{ errors.address }}
           </div>
         </div>
       </div>
       <button type="submit" class="btn btn-primary w-100">Cadastrar Propriedade</button>
     </form>
+    <!-- ✅ Toast de sucesso -->
+    <div *ngIf="successMessage" class="success-toast">
+      {{ successMessage }}
+    </div>
   </div>

@@ -3,7 +3,6 @@ package lima.wallyson.WebSmartOffice.web.controller
 import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.SmartContractUseCase
-import lima.wallyson.WebSmartOffice.web.dtos.ContractRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.ContractResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO

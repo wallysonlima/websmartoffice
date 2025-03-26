@@ -47,18 +47,13 @@ class SecurityConfig(
                     "/webjars/**",
                     "/swagger-resources/**"
                 ).permitAll()
-                requests.requestMatchers("/admin/**").hasRole("ADMIN")
+                requests.requestMatchers("/admin/**").permitAll()
                 requests.requestMatchers("/user/**").permitAll()
+                requests.requestMatchers("/auth/**").permitAll()
                 requests.anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.ALWAYS) } // ✅ Garante que a sessão é criada
             .formLogin { it.disable() } // 🔹 Desativa o login automático do Spring Security
-            .logout { logout ->
-                logout.logoutUrl("/auth/logout") // ✅ Define a URL do logout
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .permitAll()
-            }
 
         return http.build()
     }

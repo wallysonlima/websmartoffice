@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PersonService } from '../../services/person.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule]
 })
 export class PersonRegisterComponent {
+  
   personData: any = {
     name: '',
     email: '',
@@ -31,7 +32,9 @@ export class PersonRegisterComponent {
     }
   };
 
+  
   errors: any = {}; // ✅ Armazena mensagens de erro
+  successMessage: string = '';
 
   constructor(private personService: PersonService, private router: Router) {}
 
@@ -83,7 +86,6 @@ export class PersonRegisterComponent {
 
     if (!this.personData.bankAccount.privateKey) this.errors.privateKey = 'A chave privada é obrigatória!';
     if (!this.personData.bankAccount.ethAddress) this.errors.ethAddress = 'O endereço Ethereum é obrigatório!';
-    if (!this.personData.bankAccount.balance) this.errors.balance = 'O saldo inicial é obrigatório!';
 
     return Object.keys(this.errors).length === 0; // Retorna true se não houver erros
   }
@@ -97,9 +99,14 @@ export class PersonRegisterComponent {
 
     this.personService.register(this.personData).subscribe({
       next: () => {
-        alert('✅ Cadastro realizado com sucesso!');
-        this.router.navigate(['/login']);
-      },
+        this.successMessage = '✅ Cadastro realizado com sucesso!';
+      
+      // Aguarda 3 segundos antes de redirecionar
+      setTimeout(() => {
+        this.successMessage = '';
+        this.router.navigate(['/main']);
+      }, 3000);
+    },
       error: (err) => {
         console.error('❌ Erro ao cadastrar usuário:', err);
         alert('❌ Erro ao cadastrar usuário.');

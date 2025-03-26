@@ -62,8 +62,9 @@ export class BuyComponent implements OnInit {
       withCredentials: true
     }).subscribe({
       next: (data) => {
-        this.properties = data;
-        this.propertyStates = data.map(() => ({ signed: false, paid: false }));
+        const userCpf = this.userSession?.cpf;
+        this.properties = data.filter(property => property.cpfProperty !== userCpf);
+        this.propertyStates = this.properties.map(() => ({ signed: false, paid: false }));
       },
       error: (err) => console.error('Erro ao buscar propriedades:', err)
     });
@@ -111,7 +112,8 @@ export class BuyComponent implements OnInit {
     };
 
     this.http.post('http://localhost:8080/user/property/buyProperty', payload, {
-      withCredentials: true
+      withCredentials: true,
+      responseType: 'text'
     }).subscribe({
       next: () => {
         this.propertyStates[index].paid = true;

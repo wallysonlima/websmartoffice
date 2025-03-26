@@ -23,9 +23,13 @@ interface PropertyResponseDTO {
 export class HomeComponent implements OnInit {
   userSession: any = null;
   properties: PropertyResponseDTO[] = [];
+  isAdmin = false; // ✅ Define se o usuário é admin
 
   
-  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {
+    this.loadSession();
+    this.checkUserRole();
+  }
 
   ngOnInit(): void {
     console.log('Aplicação iniciada!'); // ✅ Debug para ver se o componente está sendo carregado
@@ -45,9 +49,35 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  formatCpf(cpf: string): string {
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+  
+  formatDate(date: string): string {
+    const d = new Date(date);
+    return d.toLocaleDateString('pt-BR');
+  }
+  
+  formatPhone(phone: string): string {
+    return phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+  }
+
   logout() {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']); // ✅ Redireciona para login ao sair
     });
+  }
+
+  loadSession() {
+    const savedSession = localStorage.getItem('userSession');
+    if (savedSession) {
+      this.userSession = JSON.parse(savedSession);
+      console.log('🔹 Sessão carregada:', this.userSession);
+    }
+  }
+
+  checkUserRole() {
+    const roles = this.authService.getUserRole();
+    this.isAdmin = roles.includes('ROLE_ADMIN'); // ✅ Verifica se o usuário tem a role ADMIN
   }
 }

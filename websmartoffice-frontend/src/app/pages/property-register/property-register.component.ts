@@ -22,6 +22,7 @@ export class PropertyRegisterComponent {
   };
 
   errors: any = {}; // ✅ Armazena mensagens de erro
+  successMessage: string = '';
 
   constructor(private propertyService: PropertyService, private router: Router) {}
 
@@ -86,9 +87,14 @@ export class PropertyRegisterComponent {
 
     this.propertyService.register(this.propertyData).subscribe({
       next: () => {
-        alert('✅ Propriedade cadastrada com sucesso!');
+        this.successMessage = '✅ Cadastro realizado com sucesso!';
+      
+      // Aguarda 3 segundos antes de redirecionar
+      setTimeout(() => {
+        this.successMessage = '';
         this.router.navigate(['/main']);
-      },
+      }, 3000);
+    },
       error: (err) => {
         console.error('❌ Erro ao cadastrar propriedade:', err);
         alert('❌ Erro ao cadastrar a propriedade.');

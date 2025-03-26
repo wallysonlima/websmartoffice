@@ -15,7 +15,7 @@
         <!-- Email -->
         <div class="col-md-6 mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email"
+          <input type="email" class="form-control" id="email" autocomplete="off"
             [(ngModel)]="personData.email" name="email"
             [class.is-invalid]="errors.email">
           <div *ngIf="errors.email" class="invalid-feedback">{{ errors.email }}</div>
@@ -26,7 +26,7 @@
         <!-- Senha -->
         <div class="col-md-6 mb-3">
           <label for="password" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="password"
+          <input type="password" class="form-control" id="password" autocomplete="off"
             [(ngModel)]="personData.password" name="password"
             [class.is-invalid]="errors.password">
           <div *ngIf="errors.password" class="invalid-feedback">{{ errors.password }}</div>
@@ -99,7 +99,7 @@
   
         <!-- Role -->
         <div class="col-md-6 mb-3">
-          <label for="role" class="form-label">Cargo</label>
+          <label for="role" class="form-label">Role</label>
           <input type="text" class="form-control" id="role"
             [(ngModel)]="personData.role" name="role"
             [class.is-invalid]="errors.role">
@@ -139,18 +139,13 @@
             [class.is-invalid]="errors.ethAddress">
           <div *ngIf="errors.ethAddress" class="invalid-feedback">{{ errors.ethAddress }}</div>
         </div>
-  
-        <!-- Saldo -->
-        <div class="col-md-6 mb-3">
-          <label for="balance" class="form-label">Saldo</label>
-          <input type="number" step="0.01" class="form-control" id="balance"
-            [(ngModel)]="personData.bankAccount.balance" name="balance"
-            [class.is-invalid]="errors.balance">
-          <div *ngIf="errors.balance" class="invalid-feedback">{{ errors.balance }}</div>
         </div>
-      </div>
   
       <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
     </form>
+
+    <div *ngIf="successMessage" class="success-toast">
+      {{ successMessage }}
+    </div>
   </div>
   

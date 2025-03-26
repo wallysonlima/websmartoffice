@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: 'register/person', component: PersonRegisterComponent },
   { path: 'register/property', component: PropertyRegisterComponent },
   { path: 'buy/property', component: BuyComponent },
-  { path: '/list/contract', component: ContractsComponent },
+  { path: 'list/contract', component: ContractsComponent },
   { path: 'main', component: HomeComponent, canActivate: [AuthGuard] }, // ✅ Página protegida pelo AuthGuard
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // ✅ Redireciona para login por padrão
   { path: '**', redirectTo: '/login' } // ✅ Qualquer rota inválida leva para login

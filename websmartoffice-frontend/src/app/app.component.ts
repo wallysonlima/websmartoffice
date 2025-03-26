@@ -31,22 +31,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('Aplicação iniciada!'); // ✅ Debug para ver se o componente está sendo carregado
     this.loadSession();
+    this.checkUserRole();
   }
 
   logout() {
-    console.log('🔹 Logout iniciado...');
-    
-    this.authService.logout().subscribe({
-      next: () => {
-        console.log('✅ Logout realizado com sucesso!');
-        localStorage.removeItem('userSession');
-        setTimeout(() => {
-          window.location.href = "/login"; // ✅ Redirecionamento direto para evitar erros
-        }, 500);
-      },
-      error: (err) => {
-        console.error('❌ Erro ao fazer logout:', err);
-      }
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/login']); // ✅ Redireciona para login ao sair
     });
   }
 
