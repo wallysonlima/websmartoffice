@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
 import org.web3j.tx.gas.DefaultGasProvider
+import org.web3j.utils.Convert
 
 @Service
 class PropertyUseCase(
@@ -80,25 +81,27 @@ class PropertyUseCase(
         // Obter o preço do imóvel diretamente do contrato
         val priceInWei = contract.priceInWei.send()
 
-        //bankAccount.transferFundsBetweenEthereumAccounts(
-        //    buyerPrivateKey,
-        //    contractAddress,
-        //    amountBrl
-        //)
+        // Calcular o preço em BRL com base na cotação do ETH
+        val ethPriceInBrl = bankAccount.getEthereumPrice()
+        val priceInEth = Convert.fromWei(priceInWei.toBigDecimal(), Convert.Unit.ETHER)
+        val priceInBrl = priceInEth * ethPriceInBrl
 
         // Chamar a função buyProperty() no contrato para confirmar a compra
         val transactionReceipt = contract.buyProperty(priceInWei).send().also {
             //Atualiza saldo contas comprador e vendedor
             bankAccount.updateBalanceBankAccounts(
                 cpfBuyer,
-                cpfSeller
+                cpfSeller,
+                priceInBrl
             )
         }
 
         // Salva o hash da transacao no contrato
         saveContract(
             registerProperty,
-            transactionReceipt.transactionHash
+            transactionReceipt.transactionHash,
+            cpfBuyer,
+            cpfSeller
         )
 
         //atualiza dono da propriedade
@@ -144,9 +147,11 @@ class PropertyUseCase(
 
     private fun saveContract(
         registerProperty: String,
-        transactionHash: String
+        transactionHash: String,
+        cpfBuyer: String,
+        cpfSeller: String
     ) {
-        val contractEntity = contractRepository.findByRegisterProperty(registerProperty)
+        val contractEntity = contractRepository.findByRegisterPropertyAndCpfBuyerAndCpfSeller(registerProperty, cpfBuyer, cpfSeller)
 
         contractEntity.hashContractTransaction = transactionHash
 

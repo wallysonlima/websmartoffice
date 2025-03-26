@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Aplicação iniciada!'); // ✅ Debug para ver se o componente está sendo carregado
+    localStorage.clear();
+    this.userSession = null;
     const session = localStorage.getItem('userSession');
     if ( session ) {
       this.userSession = JSON.parse(session);

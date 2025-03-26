@@ -42,6 +42,10 @@ class BankAccountUseCase(
         return amountInEth * ethPriceInBrl
     }
 
+    fun getBalanceUser(cpf:String): Double {
+        return bankAccountRepository.findBankAccountByBankCpf(cpf).balance.toDouble()
+    }
+
     /**
      * Obtém a cotação do Ethereum em BRL
      */
@@ -94,27 +98,29 @@ class BankAccountUseCase(
 
     fun updateBalanceBankAccounts(
         cpfBuyer: String,
-        cpfSeller: String
+        cpfSeller: String,
+        priceInBrl: BigDecimal
     ) {
         val buyerBank = bankAccountRepository.findBankAccountByBankCpf(cpfBuyer)
         val sellerBank = bankAccountRepository.findBankAccountByBankCpf(cpfSeller)
 
-        println("Balance BuyerBank Before: " + buyerBank.balance)
-        println("Balance SellerBank Before: " + sellerBank.balance)
+        if ( buyerBank.balance < priceInBrl ) {
+            throw IllegalStateException("Saldo insuficiente para realizar a compra.")
+        }
 
-        buyerBank.balance = getBalanceInBrl(buyerBank.ethAddress)
-        sellerBank.balance = getBalanceInBrl(sellerBank.ethAddress)
+        println("saldo Comprador: " + buyerBank.balance.toDouble())
+        println("saldo Vendedor: " + sellerBank.balance.toDouble())
+        println("Preco Imovel em BRL: " + priceInBrl)
 
-        println("Balance BuyerBank After: " + buyerBank.balance)
-        println("Balance SellerBank After: " + sellerBank.balance)
+        buyerBank.balance = buyerBank.balance - priceInBrl - defaultGasPrice
+        sellerBank.balance = sellerBank.balance + priceInBrl - defaultGasPrice
+
+        println("after -----------------")
+        println("saldo Comprador: " + buyerBank.balance.toDouble())
+        println("saldo Vendedor: " + sellerBank.balance.toDouble())
+        println("Preco Imovel em BRL: " + priceInBrl)
         
         bankAccountRepository.save(buyerBank)
         bankAccountRepository.save(sellerBank)
-    }
-
-    fun convertFromEthToBrl(priceInWei: BigDecimal): BigDecimal {
-        val ethAmount = Convert.fromWei(priceInWei, Convert.Unit.ETHER) // Wei → ETH
-        val ethPriceInBrl = getEthereumPrice()
-        return (ethAmount * ethPriceInBrl)
     }
 }

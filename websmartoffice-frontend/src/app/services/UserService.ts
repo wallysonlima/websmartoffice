@@ -1,6 +1,6 @@
 // src/app/services/user.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface BankAccountResponseDTO {
@@ -40,5 +40,14 @@ export class UserService {
       headers,
       withCredentials: true
     });
+  }
+
+  getBalance(cpf: string): Observable<number> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const params = new HttpParams().set('cpf', cpf);
+
+    return this.http.get<number>(`${this.apiUrl}/balance`, { params, headers, withCredentials: true });
   }
 }

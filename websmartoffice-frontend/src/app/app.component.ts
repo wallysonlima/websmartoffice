@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserService } from './services/UserService';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,9 @@ import { CommonModule } from '@angular/common';
 export class AppComponent implements OnInit {
   userSession: any = null;
   isAdmin = false; // ✅ Define se o usuário é admin
+  balance: number = 0;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private userService:UserService) {
     this.loadSession();
     this.checkUserRole();
   }
@@ -31,12 +33,22 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('Aplicação iniciada!'); // ✅ Debug para ver se o componente está sendo carregado
     this.loadSession();
-    this.checkUserRole();
   }
 
   logout() {
-    this.authService.logout().subscribe(() => {
-      this.router.navigate(['/login']); // ✅ Redireciona para login ao sair
+    console.log('🔹 Logout iniciado...');
+    
+    this.authService.logout().subscribe({
+      next: () => {
+        console.log('✅ Logout realizado com sucesso!');
+        localStorage.removeItem('userSession');
+        setTimeout(() => {
+          window.location.href = "/login"; // ✅ Redirecionamento direto para evitar erros
+        }, 500);
+      },
+      error: (err) => {
+        console.error('❌ Erro ao fazer logout:', err);
+      }
     });
   }
 

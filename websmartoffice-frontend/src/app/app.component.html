@@ -13,31 +13,24 @@
             <a class="nav-link active" routerLink="/main">Dashboard</a>
           </li>
            <!-- 🔹 Apenas para ADMIN -->
-          <li class="nav-item" *ngIf="userSession">
+          <li class="nav-item">
             <a class="nav-link active" routerLink="/register/person">Cadastrar Usuário</a>
           </li>
-          <li class="nav-item" *ngIf="userSession">
+          <li class="nav-item">
             <a class="nav-link active" routerLink="/register/property">Cadastrar Propriedade</a>
           </li>
-          <li class="nav-item" *ngIf="userSession">
+          <li class="nav-item">
             <a class="nav-link active" routerLink="/list/contract">Listar Contratos</a>
           </li>
-          <li class="nav-item" *ngIf="userSession">
+          <li class="nav-item">
             <a class="nav-link active" routerLink="/buy/property">Comprar Imóvel</a>
           </li>
           <!-- 🔹 Logout -->
-          <li class="nav-item ms-3" *ngIf="userSession">
+          <li class="nav-item ms-3">
             <button class="btn btn-outline-primary logout-button" (click)="logout()">
               Logout
             </button>
           </li>
-          <!-- Dentro do <ul class="navbar-nav ms-auto"> -->
-            <li class="name" *ngIf="userSession">
-              <small><strong>{{ userSession.name }}</strong></small>
-             </li>
-             <li class="saldo" *ngIf="userSession">
-              <small *ngIf="userSession.bankAccount"><strong>Saldo: R$ {{ userSession.bankAccount.balance | number: '1.2-2' }}</strong></small>
-            </li>
         </ul>
       </div>
     </div>

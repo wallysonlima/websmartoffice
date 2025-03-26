@@ -63,9 +63,9 @@ class UserController(
 
     @GetMapping("/balance")
     fun getBalance(
-        @RequestParam email: String
-    ): BigDecimal {
-        return bankAccountUseCase.getBalanceInBrl(email)
+        @RequestParam cpf: String
+    ): Double {
+        return bankAccountUseCase.getBalanceUser(cpf)
     }
 
     @GetMapping("/getUser")

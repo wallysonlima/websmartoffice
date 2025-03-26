@@ -33,28 +33,6 @@
     margin-top: 10.5%;
     width: 100%;
   }
-
-  .name {
-    position: absolute;
-    right: 220px;
-    top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    color: white;
-    font-size: 0.95rem;
-  }
-
-  .saldo{
-    position: absolute;
-    right: 20px;
-    top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    color: white;
-    font-size: 0.95rem;
-  }
   
   .navbar .nav-link {
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -67,22 +45,23 @@
   }
 
   .logout-button {
-    border-radius: 0px;
-    padding: 5px 15px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-  
-    &:hover {
-      background-color: #0056b3;
-      transform: scale(1.05);
-    }
-  
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
-    }
+  border-radius: 0px;
+  width: 100px;
+  padding: 5px 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  margin-left: 900px;
+
+  &:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
   }
-  
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+  }
+}

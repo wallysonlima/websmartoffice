@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../../services/UserService';
 
 interface PropertyResponseDTO {
   cpfProperty: string;
@@ -24,9 +25,10 @@ export class HomeComponent implements OnInit {
   userSession: any = null;
   properties: PropertyResponseDTO[] = [];
   isAdmin = false; // ✅ Define se o usuário é admin
+  balance: number = 0;
 
   
-  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient, private userService: UserService) {
     this.loadSession();
     this.checkUserRole();
   }
@@ -36,6 +38,15 @@ export class HomeComponent implements OnInit {
     const session = localStorage.getItem('userSession');
     if ( session ) {
       this.userSession = JSON.parse(session);
+      const cpf = this.userSession.cpf
+
+      if (cpf) {
+        this.userService.getBalance(cpf).subscribe({
+          next: (saldo) => this.balance = saldo,
+          error: (err) => console.error('Erro ao buscar saldo:', err)
+        });
+      }
+
       this.fetchProperties(this.userSession.email)
     }
   }

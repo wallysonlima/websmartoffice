@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ContractRepository: JpaRepository<ContractsEntity, Long> {
 
-    fun findByRegisterProperty(registerProperty: String): ContractsEntity
+    fun findByRegisterPropertyAndCpfBuyerAndCpfSeller(registerProperty: String, cpfBuyer: String, cpfSeller: String): ContractsEntity
 }

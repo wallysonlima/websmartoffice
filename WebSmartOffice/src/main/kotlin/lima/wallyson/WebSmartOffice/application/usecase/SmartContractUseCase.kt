@@ -25,12 +25,11 @@ class SmartContractUseCase(
         contractRepository.findAll().map { cont ->
             contracts.add(
                 ContractResponseDTO(
-                    cpfBuyer = cont.cpfBuyer,
-                    cpfSeller = cont.cpfSeller,
+                    buyerCpf = cont.cpfBuyer,
+                    sellerCpf = cont.cpfSeller,
                     registerProperty = cont.registerProperty,
                     contractAddress = cont.contractAddress,
-                    hashContractTransaction = cont.hashContractTransaction,
-                    dateCreation = cont.dateCreation.toString()
+                    dateCreated = cont.dateCreation.toString()
                 )
             )
         }
