@@ -3,6 +3,7 @@ package lima.wallyson.WebSmartOffice.application.usecase
 import blockchain_java.PropertySale
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.ContractsEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.ContractRepository
+import lima.wallyson.WebSmartOffice.web.dtos.ContractResponseDTO
 import org.springframework.stereotype.Service
 import org.web3j.crypto.Credentials
 import org.web3j.tx.gas.DefaultGasProvider
@@ -17,6 +18,25 @@ class SmartContractUseCase(
     private val contractRepository: ContractRepository,
     private val web3j: Web3j
 ) {
+
+    fun getContracts(): List<ContractResponseDTO> {
+        var contracts: MutableList<ContractResponseDTO> = mutableListOf()
+
+        contractRepository.findAll().map { cont ->
+            contracts.add(
+                ContractResponseDTO(
+                    cpfBuyer = cont.cpfBuyer,
+                    cpfSeller = cont.cpfSeller,
+                    registerProperty = cont.registerProperty,
+                    contractAddress = cont.contractAddress,
+                    hashContractTransaction = cont.hashContractTransaction,
+                    dateCreation = cont.dateCreation.toString()
+                )
+            )
+        }
+
+        return contracts
+    }
 
     fun deployContract(
         cpfBuyer: String,

@@ -4,8 +4,9 @@ import jakarta.servlet.http.HttpServletRequest
 import lima.wallyson.WebSmartOffice.application.usecase.BankAccountUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
-import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
+import lima.wallyson.WebSmartOffice.application.usecase.SmartContractUseCase
 import lima.wallyson.WebSmartOffice.web.dtos.BuyPropertyRequestDTO
+import lima.wallyson.WebSmartOffice.web.dtos.ContractRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyResponseDTO
 import org.springframework.http.HttpStatus
@@ -24,13 +25,14 @@ class UserController(
     val propertyUseCase: PropertyUseCase,
     val bankAccountUseCase: BankAccountUseCase,
     val personUseCase: PersonUseCase,
+    val smartContractUseCase: SmartContractUseCase
 ) {
 
-    @PostMapping("/buyProperty")
+    @PostMapping("/property/buyProperty")
     fun buyProperty(
         @RequestBody buyPropertyRequest: BuyPropertyRequestDTO
     ): ResponseEntity<String> {
-            return ResponseEntity.status(HttpStatus.CREATED).body(
+            return ResponseEntity.status(HttpStatus.OK).body(
                 propertyUseCase.buyProperty(
                     buyPropertyRequest.cpfBuyer,
                     buyPropertyRequest.cpfSeller,
@@ -39,6 +41,24 @@ class UserController(
                     buyPropertyRequest.contractAddress
                 )
             )
+    }
+
+    @PostMapping("/property/signContract")
+    fun signContract(
+        @RequestBody contractRequest: ContractRequestDTO
+    ): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.OK).body(
+            smartContractUseCase.deployContract(
+                contractRequest.cpfBuyer,
+                contractRequest.cpfSeller,
+                contractRequest.privateKeyFromBankAccount,
+                contractRequest.address,
+                contractRequest.propertySize,
+                contractRequest.priceInBrl,
+                contractRequest.registerProperty,
+                contractRequest.notarialDeed,
+            )
+        )
     }
 
     @GetMapping("/balance")
@@ -66,6 +86,13 @@ class UserController(
     ): ResponseEntity<List<PropertyResponseDTO>> {
         return ResponseEntity.status(HttpStatus.OK).body(
             propertyUseCase.getPropertiesFromUser(email)
+        )
+    }
+
+    @GetMapping("/getProperties")
+    fun getProperties() : ResponseEntity<List<PropertyResponseDTO>> {
+        return ResponseEntity.status(HttpStatus.OK).body(
+            propertyUseCase.getProperties()
         )
     }
 

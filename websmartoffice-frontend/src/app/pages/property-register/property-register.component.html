@@ -61,93 +61,18 @@
             {{ errors.size }}
           </div>
         </div>
-      </div>
   
-      <hr>
-      <h4>Endereço</h4>
-  
-      <div class="row">
-        <!-- Rua -->
+        <!-- Endereço -->
         <div class="col-md-6 mb-3">
-          <label for="streetName" class="form-label">Rua</label>
-          <input type="text" class="form-control" id="streetName"
-            [(ngModel)]="propertyData.address.streetName" name="streetName"
-            [class.is-invalid]="errors.streetName">
-          <div *ngIf="errors.streetName" class="invalid-feedback">
-            {{ errors.streetName }}
-          </div>
-        </div>
-  
-        <!-- Número -->
-        <div class="col-md-6 mb-3">
-          <label for="number" class="form-label">Número</label>
-          <input type="text" class="form-control" id="number"
-            [(ngModel)]="propertyData.address.number" name="number"
-            [class.is-invalid]="errors.number">
-          <div *ngIf="errors.number" class="invalid-feedback">
-            {{ errors.number }}
+          <label for="address" class="form-label">Endereço completo</label>
+          <input type="text" class="form-control" id="size"
+            [(ngModel)]="propertyData.size" name="address"
+            [class.is-invalid]="errors.size">
+          <div *ngIf="errors.size" class="invalid-feedback">
+            {{ errors.size }}
           </div>
         </div>
       </div>
-  
-      <div class="row">
-        <!-- Complemento -->
-        <div class="col-md-6 mb-3">
-          <label for="complementAddress" class="form-label">Complemento</label>
-          <input type="text" class="form-control" id="complementAddress"
-            [(ngModel)]="propertyData.address.complementAddress" name="complementAddress">
-        </div>
-  
-        <!-- Bairro -->
-        <div class="col-md-6 mb-3">
-          <label for="district" class="form-label">Bairro</label>
-          <input type="text" class="form-control" id="district"
-            [(ngModel)]="propertyData.address.district" name="district"
-            [class.is-invalid]="errors.district">
-          <div *ngIf="errors.district" class="invalid-feedback">
-            {{ errors.district }}
-          </div>
-        </div>
-      </div>
-  
-      <div class="row">
-        <!-- Cidade -->
-        <div class="col-md-6 mb-3">
-          <label for="city" class="form-label">Cidade</label>
-          <input type="text" class="form-control" id="city"
-            [(ngModel)]="propertyData.address.city" name="city"
-            [class.is-invalid]="errors.city">
-          <div *ngIf="errors.city" class="invalid-feedback">
-            {{ errors.city }}
-          </div>
-        </div>
-  
-        <!-- Estado -->
-        <div class="col-md-6 mb-3">
-          <label for="state" class="form-label">Estado</label>
-          <input type="text" class="form-control" id="state"
-            [(ngModel)]="propertyData.address.state" name="state"
-            [class.is-invalid]="errors.state">
-          <div *ngIf="errors.state" class="invalid-feedback">
-            {{ errors.state }}
-          </div>
-        </div>
-      </div>
-  
-      <div class="row">
-        <!-- CEP -->
-        <div class="col-md-6 mb-3">
-          <label for="postalCode" class="form-label">CEP</label>
-          <input type="text" class="form-control" id="postalCode"
-            [(ngModel)]="propertyData.address.postalCode" name="postalCode"
-            [class.is-invalid]="errors.postalCode">
-          <div *ngIf="errors.postalCode" class="invalid-feedback">
-            {{ errors.postalCode }}
-          </div>
-        </div>
-      </div>
-  
       <button type="submit" class="btn btn-primary w-100">Cadastrar Propriedade</button>
     </form>
   </div>
-  

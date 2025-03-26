@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface PropertyRepository: JpaRepository<PropertyEntity, Long> {
 
     fun findAllByPropertyCpf(propertyCpf: String): List<PropertyEntity>
+
+    fun findByPropertyCpfAndRegisterProperty(propertyCpf: String, registerProperty: String): PropertyEntity
 }

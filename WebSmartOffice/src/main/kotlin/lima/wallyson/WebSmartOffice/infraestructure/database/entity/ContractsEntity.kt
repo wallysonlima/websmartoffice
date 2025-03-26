@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "contracts")
@@ -27,5 +28,8 @@ data class ContractsEntity (
     val contractAddress: String,
 
     @Column(name = "hash_contract_transaction")
-    var hashContractTransaction:String? = null
+    var hashContractTransaction:String? = null,
+
+    @Column(name = "dt_creation")
+    val dateCreation: LocalDateTime = LocalDateTime.now()
 )

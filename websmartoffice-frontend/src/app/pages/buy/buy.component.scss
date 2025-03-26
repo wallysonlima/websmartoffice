@@ -1,0 +1,91 @@
+.user-card-container {
+    max-width: 600px;       // 🔹 largura máxima
+    width: 600px;            // 🔹 ocupa o máximo permitido
+    padding-left: 0;
+    margin: 0 auto;
+  }
+  
+  .card {
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+  
+  h2, h4 {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  #principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // 🔹 Centraliza todo o conteúdo filho
+    padding: 1rem;
+  }
+  
+  .properties-container {
+    max-width: 600px;
+    width: 500px; 
+    margin-left: 0;
+    padding-left: 0;
+  }
+  
+  .properties-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; // 🔹 Centraliza os cards
+    gap: 1.5rem; // 🔹 Espaçamento entre os cards
+  }
+  
+  .properties-container .col-md-4 {
+    display: flex;
+    flex-direction: column;
+    max-width: 320px;
+  }
+  
+  .row {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .col-md-4 {
+    flex: 0 0 auto;
+    width: 33.3333%; /* 3 cards por linha */
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .card-success {
+    border: 2px solid #198754;
+    background-color: #e6ffed;
+  }
+  
+  button {
+    font-weight: 500;
+  }
+  
+  .success-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #198754;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    animation: fadeInOut 3s ease-in-out;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-10px); }
+  }

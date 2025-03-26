@@ -1,0 +1,22 @@
+<div class="container mt-4" id="principal">
+<!-- contract-list.component.html -->
+    <h4 class="text-center mb-4">Contratos Registrados</h4>
+    <div class="row gx-4 gy-4 justify-content-start">
+      <div class="col-md-4 d-flex" *ngFor="let contract of contracts">
+        <div class="card w-100 shadow-sm">
+          <div class="card-header bg-success text-white">
+            <h6 class="mb-0">Contrato</h6>
+          </div>
+          <div class="card-body">
+            <p><strong>Endereço do Contrato:</strong> {{ contract.contractAddress }}</p>
+            <p><strong>CPF Comprador:</strong> {{ contract.buyerCpf }}</p>
+            <p><strong>CPF Vendedor:</strong> {{ contract.sellerCpf }}</p>
+            <p><strong>Registro da Propriedade:</strong> {{ contract.registerProperty }}</p>
+            <p><strong>Escritura:</strong> {{ contract.notarialDeed }}</p>
+            <p><strong>Valor:</strong> R$ {{ contract.priceInBrl | number: '1.2-2' }}</p>
+            <p><strong>Data da Assinatura do Contrato:</strong> {{ contract.dateCreated }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>

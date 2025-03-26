@@ -1,0 +1,41 @@
+<div class="container mt-4" id="principal">
+
+<!-- Cards de Propriedades -->
+<div class="row mt-3 gx-4 gy-4 justify-content-start">
+    <div class="col-md-4 d-flex" *ngFor="let property of properties; let i = index">
+      <div class="card w-100 h-100 shadow-sm"
+      [ngClass]="{ 'card-success': propertyStates[i]?.paid }">
+  
+        <div class="card-header bg-secondary text-white">
+          <h6 class="mb-0">Propriedades</h6>
+        </div>
+  
+        <div class="card-body">
+          <p><strong>Registro: </strong>{{ property.registerProperty }}</p>
+          <p><strong>CPF prop:</strong>{{ property.cpfProperty }}</p>
+          <p><strong>Escritura:</strong> {{ property.notarialDeed }}</p>
+          <p><strong>Preço:</strong> R$ {{ property.price | number: '1.2-2' }}</p>
+          <p><strong>Tamanho:</strong> {{ property.size }}</p>
+          <p><strong>Endereço Completo:</strong> {{ property.address }}</p>
+  
+          <div class="mt-3 d-flex gap-2">
+            <button class="btn btn-outline-primary"
+                    [disabled]="propertyStates[i]?.signed"
+                    (click)="confirmSign(i, property)">Assinar Contrato</button>
+  
+            <button class="btn btn-outline-success"
+                    [disabled]="!propertyStates[i]?.signed || propertyStates[i]?.paid"
+                    (click)="confirmPayment(i)">Pagar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensagem de Sucesso -->
+    <ng-container *ngFor="let state of propertyStates">
+    <div class="success-toast" *ngIf="state.successMessage">
+      {{ state.successMessage }}
+    </div>
+    </ng-container>
+  
+  </div>

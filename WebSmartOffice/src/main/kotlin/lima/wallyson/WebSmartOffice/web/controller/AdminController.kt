@@ -4,13 +4,14 @@ import lima.wallyson.WebSmartOffice.application.usecase.PersonUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.PropertyUseCase
 import lima.wallyson.WebSmartOffice.application.usecase.SmartContractUseCase
 import lima.wallyson.WebSmartOffice.web.dtos.ContractRequestDTO
+import lima.wallyson.WebSmartOffice.web.dtos.ContractResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PersonRequestDTO
-import lima.wallyson.WebSmartOffice.web.dtos.PersonResponseDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyRequestDTO
 import lima.wallyson.WebSmartOffice.web.dtos.PropertyResponseDTO
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -55,21 +56,10 @@ class AdminController(
         }
     }
 
-    @PostMapping("/property/signContract")
-    fun signContract(
-        @RequestBody contractRequest: ContractRequestDTO
-    ): ResponseEntity<String> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-            smartContractUseCase.deployContract(
-                contractRequest.cpfBuyer,
-                contractRequest.cpfSeller,
-                contractRequest.privateKeyFromBankAccount,
-                contractRequest.address,
-                contractRequest.propertySize,
-                contractRequest.priceInBrl,
-                contractRequest.registerProperty,
-                contractRequest.notarialDeed,
-            )
+    @GetMapping("/getContracts")
+    fun getContracts(): ResponseEntity<List<ContractResponseDTO>> {
+        return ResponseEntity.status(HttpStatus.OK).body(
+            smartContractUseCase.getContracts()
         )
     }
 }

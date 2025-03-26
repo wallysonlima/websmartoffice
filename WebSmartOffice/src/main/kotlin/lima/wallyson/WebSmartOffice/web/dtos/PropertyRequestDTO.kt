@@ -6,6 +6,6 @@ data class PropertyRequestDTO (
     val notarialDeed: String,
     val price: Double,
     val size: String,
-    val address: AddressRequestDTO
+    val address: String
 )
 

@@ -2,9 +2,7 @@ package lima.wallyson.WebSmartOffice.application.usecase
 
 import blockchain_java.PropertySale
 import jakarta.transaction.Transactional
-import lima.wallyson.WebSmartOffice.infraestructure.database.entity.AddressEntity
 import lima.wallyson.WebSmartOffice.infraestructure.database.entity.PropertyEntity
-import lima.wallyson.WebSmartOffice.infraestructure.database.repository.AddressRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.ContractRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PersonRepository
 import lima.wallyson.WebSmartOffice.infraestructure.database.repository.PropertyRepository
@@ -21,7 +19,6 @@ import org.web3j.tx.gas.DefaultGasProvider
 class PropertyUseCase(
     val personRepository: PersonRepository,
     val propertyRepository: PropertyRepository,
-    val addressRepository: AddressRepository,
     val bankAccount: BankAccountUseCase,
     val contractRepository: ContractRepository,
     val web3j: Web3j
@@ -44,27 +41,16 @@ class PropertyUseCase(
                     notarialDeed = request.notarialDeed,
                     price = request.price,
                     size = request.size,
+                    address = request.address
                 )
-            ).let {
-                val address = AddressEntity(
-                    propertyRegister = request.registerProperty,
-                    streetName = request.address.streetName,
-                    number = request.address.number,
-                    complementAddress = request.address.complementAddress,
-                    district = request.address.district,
-                    city = request.address.city,
-                    state = request.address.state,
-                    postalCode = request.address.postalCode,
-                )
-
-                addressRepository.save(address)
-            }
+            )
 
             return PropertyResponseDTO(
                 registerProperty = request.registerProperty,
                 notarialDeed = request.notarialDeed,
                 price = request.price,
                 size = request.size,
+                address = request.address
             )
 
             log.info("c=PropertyUseCase, m=register, i=end")
@@ -115,20 +101,42 @@ class PropertyUseCase(
             transactionReceipt.transactionHash
         )
 
+        //atualiza dono da propriedade
+        val property = propertyRepository.findByPropertyCpfAndRegisterProperty(cpfSeller, registerProperty)
+        property.propertyCpf = cpfBuyer
+        propertyRepository.save(property)
+
         return "Compra realizada com sucesso! Hash da transação: ${transactionReceipt.transactionHash}"
     }
 
     fun getPropertiesFromUser(email:String): MutableList<PropertyResponseDTO> {
         val user = personRepository.findByEmail(email)
         var properties: MutableList<PropertyResponseDTO> = mutableListOf()
-        propertyRepository.findAll().map { prop ->
+        propertyRepository.findAllByPropertyCpf(user.get().cpf).map { prop ->
            properties.add(PropertyResponseDTO(
                cpfProperty = prop.propertyCpf!!,
                registerProperty = prop.registerProperty,
                notarialDeed = prop.notarialDeed,
                price = prop.price,
+               address = prop.address,
                size = prop.size
            ))
+        }
+
+        return properties
+    }
+
+    fun getProperties(): MutableList<PropertyResponseDTO> {
+        var properties: MutableList<PropertyResponseDTO> = mutableListOf()
+        propertyRepository.findAll().map { prop ->
+            properties.add(PropertyResponseDTO(
+                cpfProperty = prop.propertyCpf!!,
+                registerProperty = prop.registerProperty,
+                notarialDeed = prop.notarialDeed,
+                price = prop.price,
+                size = prop.size,
+                address = prop.address
+            ))
         }
 
         return properties

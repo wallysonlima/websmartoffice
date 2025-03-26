@@ -18,15 +18,7 @@ export class PropertyRegisterComponent {
     notarialDeed: '',
     price: '',
     size: '',
-    address: {
-      streetName: '',
-      number: '',
-      complementAddress: '',
-      district: '',
-      city: '',
-      state: '',
-      postalCode: ''
-    }
+    address: ''
   };
 
   errors: any = {}; // ✅ Armazena mensagens de erro
@@ -78,20 +70,8 @@ export class PropertyRegisterComponent {
     }
 
     // Validação do endereço
-    if (!this.propertyData.address.streetName) {
-      this.errors.streetName = 'A rua é obrigatória!';
-    }
-
-    if (!this.propertyData.address.city) {
-      this.errors.city = 'A cidade é obrigatória!';
-    }
-
-    if (!this.propertyData.address.state) {
-      this.errors.state = 'O estado é obrigatório!';
-    }
-
-    if (!this.propertyData.address.postalCode) {
-      this.errors.postalCode = 'O CEP é obrigatório!';
+    if (!this.propertyData.address) {
+      this.errors.streetName = 'O endereço é obrigatória!';
     }
 
     return Object.keys(this.errors).length === 0; // Retorna true se não houver erros

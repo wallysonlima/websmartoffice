@@ -6,5 +6,5 @@ data class Property (
     val price: Double,
     val size: String,
     val owner: Person,
-    val address: Address? = null
+    val address: String? = null
 )
