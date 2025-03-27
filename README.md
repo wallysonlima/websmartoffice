@@ -37,9 +37,9 @@ Is a web application of the notary office that process smart contracts.
   <li>IA/AI - ChatGPT</li>
 </ul>
 
-![WebSmartOffice login](https://github.com/wallysonlima/websmartoffice/tree/main/WebSmartOffice/printscreens/login.png)
-![WebSmartOffice home](https://github.com/wallysonlima/websmartoffice/tree/main/WebSmartOffice/printscreens/home.png)
-![WebSmartOffice usuarios](https://github.com/wallysonlima/websmartoffice/tree/main/WebSmartOffice/printscreens/cadastrar_usuario.png)
-![WebSmartOffice propriedades](https://github.com/wallysonlima/websmartoffice/tree/main/WebSmartOffice/printscreens/cadastrar_propriedade.png)
-![WebSmartOffice comprar](https://github.com/wallysonlima/websmartoffice/tree/main/WebSmartOffice/printscreens/comprar_propriedade.png)
-![WebSmartOffice contratos](https://github.com/wallysonlima/websmartoffice/tree/main/WebSmartOffice/printscreens/listar_contratos.png)
+![WebSmartOffice login](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/login.png)
+![WebSmartOffice home](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/home.png)
+![WebSmartOffice usuarios](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/cadastrar_usuario.png)
+![WebSmartOffice propriedades](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/comprar_propriedade.png)
+![WebSmartOffice comprar](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/comprar_propriedade.png)
+![WebSmartOffice contratos](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/listar_contratos.png)
