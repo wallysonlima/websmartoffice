@@ -36,6 +36,7 @@ Is a web application of the notorial office that process smart contracts.
 
 <ul>
   <li>Angular</li>
+  <li>JavaScript</li>
   <li>HTML</li>
   <li>CSS</li>
   <li>Bootstrap</li>
