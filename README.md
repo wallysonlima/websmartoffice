@@ -52,3 +52,6 @@ Is a web application of the notorial office that process smart contracts.
 ![WebSmartOffice propriedades](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/cadastrar_propriedade.png)
 ![WebSmartOffice comprar](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/comprar_propriedade.png)
 ![WebSmartOffice contratos](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/listar_contratos.png)
+
+<hr>
+<h5>Developed by Wallyson Lima</h5>
