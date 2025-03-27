@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="WebSmartOfficeApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
+    <envs>
+      <env name="DB_PASSWORD" value="1234" />
+      <env name="DB_USERNAME" value="wallyson" />
+      <env name="DB_NAME" value="sicadi" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="lima.wallyson.WebSmartOffice.WebSmartOfficeApplicationKt" />
+    <module name="WebSmartOffice.main" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

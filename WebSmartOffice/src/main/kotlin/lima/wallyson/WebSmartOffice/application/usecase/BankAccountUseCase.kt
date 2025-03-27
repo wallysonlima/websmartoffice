@@ -110,10 +110,10 @@ class BankAccountUseCase(
 
         println("saldo Comprador: " + buyerBank.balance.toDouble())
         println("saldo Vendedor: " + sellerBank.balance.toDouble())
-        println("Preco Imovel em BRL: " + priceInBrl)
+        println("Preco Imovel em BRL: " + priceInBrl.toDouble())
 
-        buyerBank.balance = buyerBank.balance - priceInBrl - defaultGasPrice
-        sellerBank.balance = sellerBank.balance + priceInBrl - defaultGasPrice
+        buyerBank.balance = buyerBank.balance - priceInBrl
+        sellerBank.balance = sellerBank.balance + priceInBrl
 
         println("after -----------------")
         println("saldo Comprador: " + buyerBank.balance.toDouble())

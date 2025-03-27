@@ -83,8 +83,11 @@ class PropertyUseCase(
 
         // Calcular o preço em BRL com base na cotação do ETH
         val ethPriceInBrl = bankAccount.getEthereumPrice()
+
+        println("ETH PRICE in BRL: " + ethPriceInBrl)
         val priceInEth = Convert.fromWei(priceInWei.toBigDecimal(), Convert.Unit.ETHER)
         val priceInBrl = priceInEth * ethPriceInBrl
+        println("Price in BRL: " + priceInBrl)
 
         // Chamar a função buyProperty() no contrato para confirmar a compra
         val transactionReceipt = contract.buyProperty(priceInWei).send().also {
