@@ -24,6 +24,7 @@ Is a web application of the notorial office that process smart contracts.
   <li>Ethereum</li>
   <li>RestApi</li>
   <li>Web3J -- SmartContract</li>
+  <li>BlockChain</li>
   <li>Swagger</li>
   <li>Jpa</li>
   <li>Hibernate</li>
