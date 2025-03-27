@@ -1,5 +1,5 @@
 # Web Smart Office
-Is a web application of the notary office that process smart contracts.
+Is a web application of the notorial office that process smart contracts.
 
 <h3>It is an application that process buy/sell proprieties and register in the notorial office, the processment is did with smartcontracts. </h3>
 
@@ -23,6 +23,10 @@ Is a web application of the notary office that process smart contracts.
   <li>Solidity</li>
   <li>Ethereum</li>
   <li>RestApi</li>
+  <li>Web3J -- SmartContract</li>
+  <li>Swagger</li>
+  <li>Jpa</li>
+  <li>Hibernate</li>
   <li>IA/AI - ChatGPT</li>
 </ul>
 
