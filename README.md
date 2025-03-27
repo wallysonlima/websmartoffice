@@ -28,6 +28,8 @@ Is a web application of the notorial office that process smart contracts.
   <li>Swagger</li>
   <li>Jpa</li>
   <li>Hibernate</li>
+  <li>Clean Code</li>
+  <li>Clean Architecture</li>
   <li>IA/AI - ChatGPT</li>
 </ul>
 
