@@ -23,6 +23,29 @@ class PersonUseCase(
 ) {
     private val log: Logger = LoggerFactory.getLogger(PersonUseCase::class.java)
 
+    fun getPersonByEmail(email:String): PersonResponseDTO {
+        val person = personRepository.findByEmail(email)
+        val bankAccount = bankAccountRepository.findBankAccountByBankCpf(person.get().cpf)
+
+        return PersonResponseDTO(
+            cpf = person.get().cpf,
+            rg = person.get().rg,
+            name = person.get().name,
+            email = person.get().email,
+            phoneNumber = person.get().phoneNumber,
+            dateBirth = person.get().dateBirth,
+            gender = person.get().gender,
+            civilState = person.get().civilState,
+            bankAccount = BankAccountResponseDTO(
+                bankCpf = person.get().cpf,
+                privateKey = bankAccount.privateKey,
+                ethAddress = bankAccount.ethAddress,
+                balance = bankAccount.balance
+            ),
+            role = person.get().role.toString()
+        )
+    }
+
     @Transactional
     fun register(request: PersonRequestDTO): String {
         log.info("c=RegisterPersonUseCase, m=register, i=init")
@@ -71,28 +94,5 @@ class PersonUseCase(
         if ( person == null ) IllegalArgumentException("Pessoa com o $cpf não encontrado !")
 
         personRepository.deleteByCpf(person?.cpf!!)
-    }
-
-    fun getPersonByEmail(email:String): PersonResponseDTO {
-        val person = personRepository.findByEmail(email)
-        val bankAccount = bankAccountRepository.findBankAccountByBankCpf(person.get().cpf)
-
-        return PersonResponseDTO(
-            cpf = person.get().cpf,
-            rg = person.get().rg,
-            name = person.get().name,
-            email = person.get().email,
-            phoneNumber = person.get().phoneNumber,
-            dateBirth = person.get().dateBirth,
-            gender = person.get().gender,
-            civilState = person.get().civilState,
-            bankAccount = BankAccountResponseDTO(
-                bankCpf = person.get().cpf,
-                privateKey = bankAccount.privateKey,
-                ethAddress = bankAccount.ethAddress,
-                balance = bankAccount.balance
-            ),
-            role = person.get().role.toString()
-        )
     }
 }
