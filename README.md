@@ -19,6 +19,7 @@ Is a web application of the notorial office that process smart contracts.
   <li>Java/Kotlin</li>
   <li>Spring Framework(Data, Web, MVC, Security)</li>
   <li>PostgreSql</li>
+  <li>Web3 Api</li>
   <li>HardHat</li>
   <li>Solidity</li>
   <li>Ethereum</li>
