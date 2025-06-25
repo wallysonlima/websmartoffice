@@ -32,6 +32,8 @@ Is a web application of the notorial office that process smart contracts.
   <li>Clean Code</li>
   <li>Clean Architecture</li>
   <li>IA/AI - ChatGPT</li>
+  <li>IA/AI - Google Gemini</li>
+  <li>IA/AI - DeepSeek</li>
 </ul>
 
 
@@ -45,6 +47,8 @@ Is a web application of the notorial office that process smart contracts.
   <li>CSS</li>
   <li>Bootstrap</li>
   <li>IA/AI - ChatGPT</li>
+  <li>IA/AI - Google Gemini</li>
+  <li>IA/AI - DeepSeek</li>
 </ul>
 
 ![WebSmartOffice login](https://github.com/wallysonlima/websmartoffice/blob/main/WebSmartOffice/printscreens/login.png)
